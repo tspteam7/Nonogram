@@ -10,14 +10,14 @@ public class Tile {
 	
 	private boolean xed;
 	private boolean filled;
-	private Color color;
+	private int color;
 	
 	/**
 	 * default constructor.  Sets filled to false and color to black.
 	 */
 	public Tile() {
 		filled = false;
-		color = Color.black;
+		color = 0;
 	}
 	
 	/**
@@ -26,17 +26,27 @@ public class Tile {
 	 */
 	public Tile(boolean f) {
 		filled = f;
-		color = Color.black;
+		color = 0;
 	}
 	
 	/**
 	 * sets filled to false and color to c
 	 * @param f boolean true if filled
-	 * @param c color to set tile to
+	 * @param c rgb value to set tile color to
+	 */
+	public Tile(boolean f, int c) {
+		filled = f;
+		color = c;
+	}
+	
+	/**
+	 * sets filled to false and color to c
+	 * @param f boolean true if filled
+	 * @param c rgb value to set tile color to
 	 */
 	public Tile(boolean f, Color c) {
 		filled = f;
-		color = c;
+		color = c.getRGB();
 	}
 	
 	/**
@@ -57,9 +67,17 @@ public class Tile {
 	
 	/**
 	 * 
-	 * @return the color of the tile
+	 * @return the Color object stored in the tile
 	 */
 	public Color getColor() {
+		return new Color(color);
+	}
+	
+	/**
+	 * 
+	 * @return the Color object stored in the tile
+	 */
+	public int getColorRGB() {
 		return color;
 	}
 	
@@ -68,6 +86,14 @@ public class Tile {
 	 * @param c color to set the tile to
 	 */
 	public void setColor(Color c) {
+		color = c.getRGB();
+	}
+	
+	/**
+	 * 
+	 * @param c color to set the tile to
+	 */
+	public void setColor(int c) {
 		color = c;
 	}
 	
