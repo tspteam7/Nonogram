@@ -8,7 +8,7 @@ public class Randomizer {
 		//Initialize array/random variable
 		Tile puzzle[][] = new Tile [x][y];
 		Random r = new Random();
-		
+		Tile input = new Tile(false, 0);
 		
 		//For loop to fill array
 		for(int i=0; i<x; i++) {
@@ -16,8 +16,16 @@ public class Randomizer {
 				int x1 = r.nextInt(2); //make random variable
 				
 				
-				if(x1==1) {puzzle[i][j] = }
-				else {puzzle[i][j] =  }
+				if(x1==1) {
+					input.setFilled(true);
+					input.setColor(x1);
+					puzzle[i][j] = input; 
+				}
+				else {
+					input.setFilled(false);
+					input.setColor(x1);
+					puzzle[i][j] = input; 
+				}
 				
 				
 			}
