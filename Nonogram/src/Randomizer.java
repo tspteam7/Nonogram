@@ -3,10 +3,10 @@ public class Randomizer {
 
 	
 	//simply contains the method randomizer, or more so the logic for it	
-	
-	public static int[][] Randomizer(int x, int y) {
+	//@author Michael Walker
+	public static Tile[][] Randomizer(int x, int y) {
 		//Initialize array/random variable
-		int puzzle[][] = new int [x][y];
+		Tile puzzle[][] = new Tile [x][y];
 		Random r = new Random();
 		
 		
@@ -14,7 +14,12 @@ public class Randomizer {
 		for(int i=0; i<x; i++) {
 			for(int j=0; j<y; j++) {
 				int x1 = r.nextInt(2); //make random variable
-				puzzle[i][j]= x1; //fill array
+				
+				
+				if(x1==1) {puzzle[i][j] = }
+				else {puzzle[i][j] =  }
+				
+				
 			}
 		}
 		
@@ -28,6 +33,8 @@ public class Randomizer {
 	//This is for testing purposes
 	//Outputs the puzzle made
 	public static void main(String[] args) {
+		
+		/**
 		int x = 5; //var1
 		int y = 5; //var2
 		int puzzle[][]; //puzzle
@@ -40,6 +47,7 @@ public class Randomizer {
 			}
 		 System.out.print("\n");
 		}
+		*/
 	}
 	
 	
