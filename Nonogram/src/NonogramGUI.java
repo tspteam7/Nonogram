@@ -2,9 +2,12 @@
  * Main class for gui of nonogram app
  */
 
+import java.util.ArrayList;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -41,20 +44,15 @@ public class NonogramGUI extends Application {
     
     //Arrays to store the data about how pixels lay out on the grid
     private int[][] rowInfo = {{1},{},{1,1,1},{},{1}};
+    private ArrayList<ArrayList<Integer>> rowInfoList = new ArrayList<ArrayList<Integer>>();
     private int[][] colInfo = {{1},{},{1,1,1},{},{1}};
+    private ArrayList<ArrayList<Integer>> colInfoList = new ArrayList<ArrayList<Integer>>();
     
     //The master check array
-    private int[][] master = {
-    		{0,0,1,0,0},
-    		{0,0,0,0,0},
-    		{1,0,1,0,1},
-    		{0,0,0,0,0},
-    		{0,0,1,0,0},
-    		
-    };
+    private ArrayList<ArrayList<Integer>> masterList = new ArrayList<ArrayList<Integer>>();
     
     //The board being used on the game, default is all 0
-    private int[][] board = new int[masterRow][masterCol];
+    private ArrayList<ArrayList<Integer>> boardList = new ArrayList<ArrayList<Integer>>();
     
 	
     @Override
@@ -79,14 +77,24 @@ public class NonogramGUI extends Application {
         gridPane.setMaxHeight(500);
         gridPane.setMaxWidth(500);
     	
-    	//Show the Page
+    	//Create a close button
+        Button close = new Button("Close");
+        close.setMinHeight(50);
+        close.setMinWidth(70);
+        close.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		    	Stage stage = (Stage) close.getScene().getWindow();
+		    	stage.close();
+		    }
+		});
         
         //Set the alignment of title and grid
         StackPane.setAlignment(title, Pos.TOP_CENTER);
         StackPane.setAlignment(gridPane, Pos.CENTER);
+        StackPane.setAlignment(close, Pos.BOTTOM_LEFT);
         
         //Add the title and grid to the root, then change the color of root
-        root.getChildren().addAll(title,gridPane);
+        root.getChildren().addAll(title,gridPane,close);
         root.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         
         //Create a new scene with the root and show it
@@ -104,6 +112,8 @@ public class NonogramGUI extends Application {
      * @return GridPane is a grid of buttons that can register change
      */
     private GridPane buildPuzzle(int i, int j) {
+    	build();
+    	
 		GridPane grid = new GridPane();
 		
 		//Black out area in the top left
@@ -116,23 +126,27 @@ public class NonogramGUI extends Application {
 		
 		//Create the hint boxes for each Column at the top
 		for (int c = 1 ; c < j+1; c++) {
-			TextField t = new TextField();
-			t.setDisable(true);
-			t.setMinWidth(500/i);
-			t.setMinHeight(500/j + 30);
-			t.setStyle("-fx-border-color:#010101;-fx-background-color:#FEFEFE;");
-			grid.add(t, c, 0);
+			String t = "";
+			for(int p = 0; p < rowInfoList.get(c-1).size(); p++) {
+				t = t + rowInfoList.get(c-1).get(p) + "\n";
+			}
+			Label label = new Label(t);
+			label.setTextFill(Color.WHITE);
+			grid.add(label, c, 0);
+			GridPane.setHalignment(label, HPos.CENTER);
 		}
 		
 		//Write info for each row
 		for(int r = 1 ; r < j+1; r++) {
 			//Create the hint boxes for each row on the left side of the puzzle
-			TextField t = new TextField();
-			t.setDisable(true);
-			t.setMinWidth(500/i + 30);
-			t.setMinHeight(500/j);
-			t.setStyle("-fx-border-color:#010101;-fx-background-color:#FEFEFE;");
-			grid.add(t, 0, r);
+			String t = "";
+			for(int p = 0; p < colInfoList.get(r-1).size(); p++) {
+				t = t + colInfoList.get(r-1).get(p) + " ";
+			}
+			Label label = new Label(t);
+			label.setTextFill(Color.WHITE);
+			grid.add(label, 0, r);
+			GridPane.setHalignment(label, HPos.CENTER);
 			
 			//For each grid square
 			for(int c = 1; c < i+1; c++) {
@@ -143,8 +157,8 @@ public class NonogramGUI extends Application {
 	    		b.setStyle("-fx-border-color:#010101;-fx-background-color:#FEFEFE;");
 	    		
 	    		//get current coordinates
-				int row = r;
-				int column = c;
+				int row = r -1;
+				int column = c - 1;
 				
 				//When button is pressed
 				b.setOnAction(new EventHandler<ActionEvent>() {
@@ -155,7 +169,7 @@ public class NonogramGUI extends Application {
 				    		b.setStyle("-fx-border-color:#010101;-fx-background-color:#FEFEFE;");
 				    		
 				    		//Update the board and compare to master
-				    		board[row-1][column-1] = 0;
+				    		boardList.get(row).set(column, 0);
 				    		compare();
 				    	}
 				    	//else change the button the black
@@ -164,7 +178,7 @@ public class NonogramGUI extends Application {
 				    		b.setStyle("-fx-border-color:#010101;-fx-background-color:#010101;");
 				    		
 				    		//Update the board and compare again
-				    		board[row-1][column-1] = 1;
+				    		boardList.get(row).set(column, 1);
 				    		compare();
 				    	}
 				    }
@@ -198,7 +212,7 @@ public class NonogramGUI extends Application {
 		//Compare each value in the array to see if they are equal
 		for(int r = 0 ; r < masterRow ; r++) {
 			for(int c = 0 ; c < masterCol ; c++) {
-				if(master[r][c] != board[r][c]) {
+				if(masterList.get(r).get(c) != boardList.get(r).get(c)) {
 					equals = false;
 				}
 			}
@@ -228,12 +242,85 @@ public class NonogramGUI extends Application {
 			layout.getChildren().addAll(label1, button1);
 			layout.setAlignment(Pos.CENTER);
 			      
-			//Create a scen with the layout
+			//Create a scene with the layout
 			Scene scene1= new Scene(layout, 300, 250);
 			      
 			//Show the popup
 			popupwindow.setScene(scene1);   
 			popupwindow.showAndWait();
+		}
+	}
+	
+	private void build(){
+		masterList.add(new ArrayList<Integer>());
+		masterList.add(new ArrayList<Integer>());
+		masterList.add(new ArrayList<Integer>());
+		masterList.add(new ArrayList<Integer>());
+		masterList.add(new ArrayList<Integer>());
+		
+		rowInfoList.add(new ArrayList<Integer>());
+		rowInfoList.add(new ArrayList<Integer>());
+		rowInfoList.add(new ArrayList<Integer>());
+		rowInfoList.add(new ArrayList<Integer>());
+		rowInfoList.add(new ArrayList<Integer>());
+		
+		colInfoList.add(new ArrayList<Integer>());
+		colInfoList.add(new ArrayList<Integer>());
+		colInfoList.add(new ArrayList<Integer>());
+		colInfoList.add(new ArrayList<Integer>());
+		colInfoList.add(new ArrayList<Integer>());
+		
+		masterList.get(0).add(0);
+		masterList.get(0).add(0);
+		masterList.get(0).add(1);
+		masterList.get(0).add(0);
+		masterList.get(0).add(0);
+		
+		masterList.get(1).add(0);
+		masterList.get(1).add(0);
+		masterList.get(1).add(0);
+		masterList.get(1).add(0);
+		masterList.get(1).add(0);
+		
+		masterList.get(2).add(1);
+		masterList.get(2).add(0);
+		masterList.get(2).add(1);
+		masterList.get(2).add(0);
+		masterList.get(2).add(1);
+		
+		masterList.get(3).add(0);
+		masterList.get(3).add(0);
+		masterList.get(3).add(0);
+		masterList.get(3).add(0);
+		masterList.get(3).add(0);
+		
+		masterList.get(4).add(0);
+		masterList.get(4).add(0);
+		masterList.get(4).add(1);
+		masterList.get(4).add(0);
+		masterList.get(4).add(0);
+		
+		rowInfoList.get(0).add(1);
+		
+		rowInfoList.get(2).add(1);
+		rowInfoList.get(2).add(1);
+		rowInfoList.get(2).add(1);
+		
+		rowInfoList.get(4).add(1);
+		
+		colInfoList.get(0).add(1);
+		
+		colInfoList.get(2).add(1);
+		colInfoList.get(2).add(1);
+		colInfoList.get(2).add(1);
+		
+		colInfoList.get(4).add(1);
+		
+		for(int i = 0; i < masterRow ; i++) {
+			boardList.add(new ArrayList<Integer>());
+			for(int j = 0; j < masterCol ; j++) {
+				boardList.get(i).add(0);
+			}
 		}
 	}
 }
