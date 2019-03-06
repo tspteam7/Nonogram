@@ -62,16 +62,16 @@ public class parseTester {
 		
 		puzzleParser obj = new puzzleParser();
 		
-		obj.parseRowsAndColumns(methodRow, methodCol, testPuzzle);
+		obj.getClues(methodRow, methodCol, testPuzzle);
 		
 		for( int i = 0; i < methodRow.size(); i++ ) {
-			for( int j = 0; j < methodRow.get(i).size(); i++ ) {
+			for( int j = 0; j < methodRow.get(i).size(); j++ ) {
 				assertEquals( testRow.get(i).get(j), methodRow.get(i).get(j) );
 			}
 		}
 		
 		for( int i = 0; i < methodCol.size(); i++ ) {
-			for( int j = 0; j < methodCol.get(i).size(); i++ ) {
+			for( int j = 0; j < methodCol.get(i).size(); j++ ) {
 				assertEquals( testCol.get(i).get(j), methodCol.get(i).get(j) );
 			}
 		}
