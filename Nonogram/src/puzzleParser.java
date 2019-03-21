@@ -1,55 +1,35 @@
 
 import java.util.*;
 
-public class puzzleParser {
-	
-	public static void main( String[] args ) {
-		int[][] testPuzzle = {
-				{0,0,1,0,0},
-				{0,0,0,0,0},
-				{1,0,1,0,1},
-				{0,0,0,0,0},
-				{0,0,1,0,0}
-		};
-		
-		List<ArrayList<Integer>> row = new ArrayList<>();
-		List<ArrayList<Integer>> col = new ArrayList<>();
-		
-		puzzleParser obj = new puzzleParser();
-		
-		obj.getClues( row, col, testPuzzle );
-		
-		
-		System.out.println("Rows:");
-		for( int i =0 ; i < row.size(); i++ ) {
-			for( int j = 0; j < row.get(i).size(); j++ ) {
-				System.out.print(row.get(i).get(j));
-			}
-			System.out.println();
-		}
-		System.out.println("Columns:");
-		for( int i =0 ; i < col.size(); i++ ) {
-			for( int j = 0; j < col.get(i).size(); j++ ) {
-				System.out.print(col.get(i).get(j));
-			}
-			System.out.println();
-		}
-		
-		
-		for( int i = 0; i < testPuzzle.length; i++ ) {
-			for( int j = 0; j < testPuzzle[i].length; j++ ) {
-				System.out.print(testPuzzle[i][j]);
-			}
-			System.out.println();
-		}
-	}
-	
+public class puzzleParser {	
 	
 	public puzzleParser() {
 		
 	}
 	
-	public void getClues(List<ArrayList<Integer>> methodRow, List<ArrayList<Integer>> methodCol, int[][] puzzle ) {
+	
+	
+	/**
+	 * This method iterates through the rows of the given puzzle,
+	 * finding the number of 1's in the row and if they are next to each other.
+	 * For example say you have this puzzle
+	 * 					puzzle = { {0,0,1,0,0},
+	 * 							   {0,0,1,0,0},
+	 * 							   {1,1,0,1,1},
+	 * 							   {0,0,1,0,0},
+	 * 							   {0,0,1,0,0} }
+	 * Then the row list would contain { {1}, {1}, {2,2}, {1}, {1} }
+	 * because the first row only has one '1' in it, while the third row has 4 '1's
+	 * and they are grouped into pairs.
+	 * The process is reiterated to go by column.
+	 * 
+	 * @param row list containing the result of iterating through the rows
+	 * @param col list containing the result of iterating through the columns
+	 * @param puzzle input that is going to be read.
+	 * @author Luke Crandall
+	 * 
+	 */
+	public void getClues(List<ArrayList<Integer>> row, List<ArrayList<Integer>> col, int[][] puzzle ) {
 		int counter = 0;
 		ArrayList<Integer> temp = new ArrayList<>();
 		
@@ -68,7 +48,7 @@ public class puzzleParser {
 			if( counter != 0 ) {
 				temp.add(counter);
 			}
-			methodRow.add(temp);
+			row.add(temp);
 			temp = new ArrayList<>();
 			counter = 0; // Resets the counter to be used again
 		}
@@ -90,7 +70,7 @@ public class puzzleParser {
 			if( counter != 0 ) {
 				temp.add(counter);
 			}
-			methodCol.add(temp);
+			col.add(temp);
 			temp = new ArrayList<>();
 			counter = 0; // resets the counter to start again
 		}

@@ -1,10 +1,20 @@
 import java.util.Random;
 import java.util.*;
 public class Randomizer {
-	//simply contains the method randomizer, or more so the logic for it	
-	//@author Michael Walker
-		
-	public List<List<Tile>> Randomizer(int x, int y) {
+	
+	
+	/**
+	 * Method that takes in two integers and returns a 2D arraylist
+	 * with dimensions of x, y.  The values of the array are
+	 * randomly assigned to be 0 or 1.
+	 * 
+	 * @param x integer input for the desired number of rows
+	 * @param y integer input for the desired number of columns
+	 * @return puzzle a list of x lists that are y long 
+	 * @author Michael Walker
+	 * 
+	 */		
+	public List<List<Tile>> randomizer(int x, int y) {
 		//Initialize array/random variable
 		List<List<Tile>> puzzle = new ArrayList<List<Tile>>();		
 		
