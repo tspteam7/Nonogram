@@ -3,5 +3,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="Nonogram/src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+	<classpathentry kind="lib" path="C:/Users/isaac/GitHub/Nonogram/mysql-connector-java-5.1.47.jar"/>
 	<classpathentry kind="output" path="Nonogram/bin"/>
 </classpath>
