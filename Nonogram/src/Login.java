@@ -75,7 +75,8 @@ public class Login extends Application {
         			else {
         				rs.first();
         				if(password.getText().equals(rs.getString("password"))) {
-        					NonogramGUI n = new NonogramGUI();
+        					//NonogramGUI n = new NonogramGUI();
+        					Menu n = new Menu(); // Testing opening the menu
         					n.start(new Stage());
         					primaryStage.close();
         				}
