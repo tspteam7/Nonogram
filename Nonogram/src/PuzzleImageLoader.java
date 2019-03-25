@@ -6,7 +6,7 @@ import java.io.*;
 import javax.imageio.*;
 public class PuzzleImageLoader {
 	public BufferedImage img = null;
-	List<List<Tile>> currentPuzzle = new ArrayList<List<Tile>>();
+	ArrayList<ArrayList<Integer>> currentPuzzle = new ArrayList<ArrayList<Integer>>();
 	
 	PuzzleImageLoader(String address) {
 		try {
@@ -16,27 +16,25 @@ public class PuzzleImageLoader {
 	}
 	
 	public void convertPic() {
+		currentPuzzle = new ArrayList<ArrayList<Integer>>();
 		int width = img.getWidth();
 		int height = img.getHeight();
-		List<Tile> inner = new ArrayList<Tile>();
-		Tile x = new Tile(false, 0);
+		ArrayList<Integer> inner = new ArrayList<Integer>();
 		
 		for(int i=0;i<height;i++) {
 			for(int j=0; j<width;j++) {
 				int p = img.getRGB(i,  j);
 				if(p>0){
-					x.setFilled(true);
-					x.setColor(p);
-					inner.add(x);
+					inner.add(0);
 				}else {
-					inner.add(x);
+					inner.add(1);
 				}
 			currentPuzzle.add(inner);
 			}	
 		}
 	}
 	
-	public List<List<Tile>> pOutput() {
+	public ArrayList<ArrayList<Integer>> pOutput() {
 		return currentPuzzle;
 	}
 	
