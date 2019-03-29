@@ -24,12 +24,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class TuturiolGUI extends Application{
-	Stage tuturiolStage; 
+	Stage stage;
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		//Make the root to hold everything
-    	tuturiolStage = new Stage();
+    	stage = new Stage();
         StackPane root = new StackPane();
         
         //Title
@@ -57,12 +57,29 @@ public class TuturiolGUI extends Application{
 		});
         
         for(int i = 1; i <= 7 ; i++) {
+        	int temp = i;
+        	
         	Button b = new Button("Tutorial " + i);
             b.setMinHeight(50);
             b.setMinWidth(70);
             b.setOnAction(new EventHandler<ActionEvent>() {
     		    @Override public void handle(ActionEvent e) {
+    		    	String address = "C:\\Users\\Frank\\Desktop\\Game pics\\Puzzle" + temp;
+    		    	
     		    	NonogramGUI game = new NonogramGUI();
+    		    	PuzzleImageLoader load = new PuzzleImageLoader(address);
+    		    	puzzleParser parse = new puzzleParser();
+    		    	load.convertPic();
+    		    	
+    		    	ArrayList<ArrayList<Integer>> master = load.pOutput();
+    		    	ArrayList<ArrayList<Integer>> ri = new ArrayList<ArrayList<Integer>>();
+    		    	ArrayList<ArrayList<Integer>> ci = new ArrayList<ArrayList<Integer>>();
+    		    	
+    		    	parse.getClues(ri, ci, master);
+    		    	
+    		    	game.setInfo(master,ri,ci);
+    		    	
+    		    	game.start(stage);	
     		    }
     		});
             gridPane.add(b, 0, i-1);
@@ -79,8 +96,8 @@ public class TuturiolGUI extends Application{
         
         //Create a new scene with the root and show it
         Scene scene = new Scene(root, 1000, 1000);
-        tuturiolStage .setScene(scene);
-        tuturiolStage .show();
+        stage .setScene(scene);
+        stage .show();
 	}
 
 }

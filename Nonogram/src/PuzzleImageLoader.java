@@ -15,6 +15,8 @@ public class PuzzleImageLoader {
 		}catch(IOException e) {}
 	}
 	
+	public PuzzleImageLoader() {}
+
 	public void convertPic() {
 		currentPuzzle = new ArrayList<ArrayList<Integer>>();
 		int width = img.getWidth();
