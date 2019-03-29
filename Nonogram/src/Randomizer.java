@@ -30,4 +30,22 @@ public class Randomizer {
 		}		
 		return puzzle; //returns puzzle
 	}
+	
+	/*
+	public ArrayList<ArrayList<Integer>> difficultyRandomizer(int x){
+		if(x==1) {
+			return randomizer(10, 10);
+		}else if (x==2) {
+			return randomizer(20, 20);
+		}else if (x==3) {
+			return randomizer(30, 30);
+		}else {
+			return randomizer(10, 10);
+		}
+		
+		
+	}
+	*/
+	
+	
 }
