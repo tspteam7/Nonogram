@@ -143,7 +143,7 @@ public class Tester {
 		int x = 5;
 		int y = 5;
 		
-		List<List<Tile>> puzzle = new ArrayList<>();
+		ArrayList<ArrayList<Integer>> puzzle = new ArrayList<>();
 		
 		puzzle = obj.randomizer(x, y);
 		

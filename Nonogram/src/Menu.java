@@ -10,6 +10,17 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
  
 public class Menu extends Application {
+	
+	private String username;
+	
+	public Menu() {
+		username = "";
+	}
+	
+	public Menu(String user) {
+		username = user;
+	}
+	
     public static void main(String[] args) {
         launch(args);
     }

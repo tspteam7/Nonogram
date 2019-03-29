@@ -43,9 +43,7 @@ public class NonogramGUI extends Application {
     private int masterCol = 5;
     
     //Arrays to store the data about how pixels lay out on the grid
-    private int[][] rowInfo = {{1},{},{1,1,1},{},{1}};
     private ArrayList<ArrayList<Integer>> rowInfoList = new ArrayList<ArrayList<Integer>>();
-    private int[][] colInfo = {{1},{},{1,1,1},{},{1}};
     private ArrayList<ArrayList<Integer>> colInfoList = new ArrayList<ArrayList<Integer>>();
     
     //The master check array
@@ -102,6 +100,12 @@ public class NonogramGUI extends Application {
         stage.setScene(scene);
         stage.show();
 	}
+    
+    public void setInfo(ArrayList<ArrayList<Integer>> m, ArrayList<ArrayList<Integer>> r, ArrayList<ArrayList<Integer>> c) {
+    	masterList = m;
+    	rowInfoList = r;
+    	colInfoList = c;
+    }
 	
     /**
      * Creates the grid for the puzzle based on an input of number of rows and columns
@@ -112,8 +116,6 @@ public class NonogramGUI extends Application {
      * @return GridPane is a grid of buttons that can register change
      */
     private GridPane buildPuzzle(int i, int j) {
-    	build();
-    	
 		GridPane grid = new GridPane();
 		
 		//Black out area in the top left
