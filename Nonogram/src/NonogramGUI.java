@@ -42,6 +42,9 @@ public class NonogramGUI extends Application {
     private int masterRow = 5;
     private int masterCol = 5;
     
+    //If this puzzle is from tutorial
+    boolean fromTutorial = false;
+    
     //Arrays to store the data about how pixels lay out on the grid
     private ArrayList<ArrayList<Integer>> rowInfoList = new ArrayList<ArrayList<Integer>>();
     private ArrayList<ArrayList<Integer>> colInfoList = new ArrayList<ArrayList<Integer>>();
@@ -83,6 +86,15 @@ public class NonogramGUI extends Application {
 		    @Override public void handle(ActionEvent e) {
 		    	Stage stage = (Stage) close.getScene().getWindow();
 		    	stage.close();
+		    	if(fromTutorial) {
+		        	TuturiolGUI tutgui = new TuturiolGUI();
+		        	try {
+						tutgui.start(new Stage());
+					} catch (Exception a) {
+						a.printStackTrace();
+					}
+		        	
+		    	}
 		    }
 		});
         
@@ -101,10 +113,11 @@ public class NonogramGUI extends Application {
         stage.show();
 	}
     
-    public void setInfo(ArrayList<ArrayList<Integer>> m, ArrayList<ArrayList<Integer>> r, ArrayList<ArrayList<Integer>> c) {
+    public void setInfo(ArrayList<ArrayList<Integer>> m, ArrayList<ArrayList<Integer>> r, ArrayList<ArrayList<Integer>> c, boolean isTutorial) {
     	masterList = m;
     	rowInfoList = r;
     	colInfoList = c;
+    	fromTutorial = isTutorial;
     }
 	
     /**

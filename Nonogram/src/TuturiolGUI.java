@@ -77,9 +77,10 @@ public class TuturiolGUI extends Application{
     		    	
     		    	parse.getClues(ri, ci, master);
     		    	
-    		    	game.setInfo(master,ri,ci);
+    		    	game.setInfo(master,ri,ci,true);
     		    	
-    		    	game.start(stage);	
+    		    	game.start(new Stage());
+    		    	primaryStage.close();
     		    }
     		});
             gridPane.add(b, 0, i-1);
