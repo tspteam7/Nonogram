@@ -17,6 +17,7 @@ public class Puzzle {
 	int x;
 	int y;
 	int id;
+	String username;
 	
 	public Puzzle() {
 		master = new ArrayList<ArrayList<Integer>>();
@@ -24,19 +25,29 @@ public class Puzzle {
 		x = 0;
 		y = 0;
 		id = 0;
+		username = "";
+	}
+	
+	public Puzzle( int id, String username) {
+		this.username = username;
+		load(id, username);
 	}
 
 	/**
-	 * gets a puzzle from the database
+	 * gets a puzzle from the database and loads it into master if there is one.
+	 * Also loads the working version of the puzzle for that user into working if there is one.
+	 * After calling load, master and working will be null if a puzzle is not found
+	 * or creates a blank new working version
 	 * @param id the id of the puzzle to load
-	 * @return the puzzle or null if no puzzle is found
+	 * @param username username of the current user
 	 */
-	public ArrayList<ArrayList<Integer>> load( int id ){
+	public void load( int id, String username ){
 		ArrayList<ArrayList<Integer>> al = new ArrayList<>();
 		Connection conn = null;
     	PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
+			//get the puzzle with that id if it exists
 			conn = DriverManager.getConnection(
 					"jdbc:mysql://classdb.it.mtu.edu/sjogden",
 					"sjogden",
@@ -44,17 +55,53 @@ public class Puzzle {
 			stmt = conn.prepareStatement("SELECT x, y, data FROM Puzzle WHERE id = ?");
 			stmt.setInt(1, id);
 			rs = stmt.executeQuery();
-			if(!rs.next()) return null;
-			else {
+			//if it exists
+			if(rs.next()) {
 				rs.first();
 				al = stringToData(rs.getString("data"), rs.getInt("x"), rs.getInt("y"));
-				return al;
+				this.master = al;
+				this.x = rs.getInt("x");
+				this.y = rs.getInt("y");
+				this.id = id;
+			}
+			//otherwise
+			else {
+				master = null;
+				working = null;
+				this.id = -1;
+				return;
+			}
+			
+			//if a puzzle was found, fetch the working version if there is one or create a new working version
+			
+			stmt = conn.prepareStatement("SELECT x, y, data FROM Puzzle WHERE id = ? AND username = ?");
+			stmt.setInt(1, id);
+			stmt.setString(2, username);
+			rs = stmt.executeQuery();
+			
+			if(rs.next()) {
+				rs.first();
+				al = stringToData(rs.getString("data"), rs.getInt("x"), rs.getInt("y"));
+				this.working = al;
+			}
+			
+			//if one is not found
+			else {
+				stmt = conn.prepareStatement("INSERT INTO WorkingPuzzles VALUES(?, ?, ?, ?, ?)");
+				stmt.setString(1, username);
+				stmt.setInt(2, x);
+				stmt.setInt(3, y);
+				String temp = "";
+				for(int i = 0; i  < (x * y); i++) {
+					temp += "0";
+				}
+				stmt.setString(4, temp);
+				stmt.setInt(5, id);
 			}
 			
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
-			return null;
 		} 
 	}
 	
@@ -92,7 +139,7 @@ public class Puzzle {
 	 */
 	
 	
-	public void update( ArrayList<ArrayList<Integer>> puzzle, int id ) {
+	public void update( ArrayList<ArrayList<Integer>> puzzle, int id, String username ) {
 		Connection conn = null;
     	PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -101,9 +148,10 @@ public class Puzzle {
 					"jdbc:mysql://classdb.it.mtu.edu/sjogden",
 					"sjogden",
 					"password");
-			stmt = conn.prepareStatement("UPDATE WorkingPuzzles SET data = ? WHERE puzzle_id = ?");
+			stmt = conn.prepareStatement("UPDATE WorkingPuzzles SET data = ? WHERE puzzle_id = ? AND username = ?");
 			stmt.setString(1, dataToString(puzzle));
 			stmt.setInt(2, id);
+			stmt.setString(3, username);
 			rs = stmt.executeQuery();
 			
 		} catch (SQLException e) {
@@ -144,6 +192,58 @@ public class Puzzle {
 			}
 		}
 		return data;
+	}
+	
+	/*
+	 * Getters and setters
+	 */
+	
+	public ArrayList<ArrayList<Integer>> getMaster() {
+		return master;
+	}
+
+	public void setMaster(ArrayList<ArrayList<Integer>> master) {
+		this.master = master;
+	}
+
+	public ArrayList<ArrayList<Integer>> getWorking() {
+		return working;
+	}
+
+	public void setWorking(ArrayList<ArrayList<Integer>> working) {
+		this.working = working;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	
 }
