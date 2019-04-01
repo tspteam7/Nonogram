@@ -39,8 +39,8 @@ public class NonogramGUI extends Application {
     private Stage stage = null;
     
     //Create public variable keeping track of number of rows and columns of the puzzle
-    private int masterRow = 5;
-    private int masterCol = 5;
+    private int masterRow = 0;
+    private int masterCol = 0;
     
     //If this puzzle is from tutorial
     boolean fromTutorial = false;
@@ -118,6 +118,8 @@ public class NonogramGUI extends Application {
     	rowInfoList = r;
     	colInfoList = c;
     	fromTutorial = isTutorial;
+    	masterRow = m.size();
+    	masterCol = m.get(0).size();
     }
 	
     /**

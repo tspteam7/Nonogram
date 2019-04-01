@@ -64,7 +64,7 @@ public class TuturiolGUI extends Application{
             b.setMinWidth(70);
             b.setOnAction(new EventHandler<ActionEvent>() {
     		    @Override public void handle(ActionEvent e) {
-    		    	String address = "C:\\Users\\Frank\\Desktop\\Game pics\\Puzzle" + temp;
+    		    	String address = "C:\\Users\\Frank\\Desktop\\Game pics\\Puzzle" + temp + ".png";
     		    	
     		    	NonogramGUI game = new NonogramGUI();
     		    	PuzzleImageLoader load = new PuzzleImageLoader(address);
@@ -78,6 +78,13 @@ public class TuturiolGUI extends Application{
     		    	parse.getClues(ri, ci, master);
     		    	
     		    	game.setInfo(master,ri,ci,true);
+    		    	
+    		    	for(int i = 0; i < master.size(); i++) {
+    		    		for(int j = 0; j < master.get(i).size(); j++) {
+    		    			System.out.print(master.get(i).get(j) + " ");
+    		    		}
+    		    		System.out.println();
+    		    	}
     		    	
     		    	game.start(new Stage());
     		    	primaryStage.close();
