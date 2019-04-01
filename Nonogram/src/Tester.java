@@ -162,5 +162,37 @@ public class Tester {
 		
 		
 	}
+	
+	//Puzzle class tests
+	@Test
+	public void testStringToArraylist() {
+		Puzzle obj = new Puzzle();
+		ArrayList<ArrayList<Integer>> al = new ArrayList<>();
+		for(int i = 0; i < 5; i++) {
+			al.add(new ArrayList<Integer>());
+			for(int j = 0; j < 6; j++) {
+				al.get(i).add(j, j);
+			}
+		}
+		
+		assertTrue(al.equals(obj.stringToData("012345012345012345012345012345", 6, 5)));
+		
+	}
+	
+	@Test
+	public void testArraylistToString() {
+		Puzzle obj = new Puzzle();
+		ArrayList<ArrayList<Integer>> al = new ArrayList<>();
+		for(int i = 0; i < 5; i++) {
+			al.add(new ArrayList<Integer>());
+			for(int j = 0; j < 6; j++) {
+				al.get(i).add(j, j);
+			}
+		}
+
+		assertTrue("012345012345012345012345012345".equals(obj.dataToString(al)));
+		
+	}
+	
 
 }

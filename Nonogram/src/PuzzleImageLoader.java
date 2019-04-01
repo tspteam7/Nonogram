@@ -3,6 +3,8 @@ import java.util.List;
 import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
+import java.net.*;
+
 import javax.imageio.*;
 public class PuzzleImageLoader {
 	public BufferedImage img = null;
@@ -10,7 +12,10 @@ public class PuzzleImageLoader {
 	
 	PuzzleImageLoader(String address) {
 		try {
-			img = ImageIO.read(new File(address));
+			URL urlToImage = this.getClass().getResource(address);
+			img = ImageIO.read(urlToImage);	
+		//Format :
+		//"C:\\Documents and settings\\<username>\\My Documents\\images.jpeg"
 			convertPic();
 		}catch(IOException e) {}
 	}
