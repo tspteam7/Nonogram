@@ -40,7 +40,7 @@ public class Puzzle {
 	 * @param id the id of the puzzle to load
 	 * @param username username of the current user
 	 */
-	public void load( int id, String username ){
+	private void load( int id, String username ){
 		ArrayList<ArrayList<Integer>> al = new ArrayList<>();
 		Connection conn = null;
     	PreparedStatement stmt = null;
@@ -51,7 +51,7 @@ public class Puzzle {
 					"jdbc:mysql://classdb.it.mtu.edu/sjogden",
 					"sjogden",
 					"password");
-			stmt = conn.prepareStatement("SELECT x, y, data FROM Puzzle WHERE id = ?");
+			stmt = conn.prepareStatement("SELECT x, y, data FROM Puzzles WHERE puzzle_id = ?");
 			stmt.setInt(1, id);
 			rs = stmt.executeQuery();
 			//if it exists
@@ -73,7 +73,7 @@ public class Puzzle {
 			
 			//if a puzzle was found, fetch the working version if there is one or create a new working version
 			
-			stmt = conn.prepareStatement("SELECT x, y, data FROM Puzzle WHERE id = ? AND username = ?");
+			stmt = conn.prepareStatement("SELECT x, y, data FROM WorkingPuzzles WHERE puzzle_id = ? AND username = ?");
 			stmt.setInt(1, id);
 			stmt.setString(2, username);
 			rs = stmt.executeQuery();
@@ -96,6 +96,8 @@ public class Puzzle {
 				}
 				stmt.setString(4, temp);
 				stmt.setInt(5, id);
+				stmt.execute();
+				working = stringToData(temp, x, y);
 			}
 			
 		} catch (SQLException e) {
