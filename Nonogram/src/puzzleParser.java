@@ -29,14 +29,14 @@ public class puzzleParser {
 	 * @author Luke Crandall
 	 * 
 	 */
-	public void getClues(List<ArrayList<Integer>> row, List<ArrayList<Integer>> col, int[][] puzzle ) {
+	public void getClues(List<ArrayList<Integer>> row, List<ArrayList<Integer>> col, List<ArrayList<Integer>> puzzle ) {
 		int counter = 0;
 		ArrayList<Integer> temp = new ArrayList<>();
 		
 		// Iterates through the rows 
-		for( int i = 0; i < puzzle.length; i++ ) {
-			for( int j = 0; j < puzzle[i].length; j++ ) {
-				if( puzzle[i][j] > 0 ) {
+		for( int i = 0; i < puzzle.size(); i++ ) {
+			for( int j = 0; j < puzzle.get(i).size(); j++ ) {
+				if( puzzle.get(i).get(j) > 0 ) {
 					counter++;
 				} else { // If the tile is not filled...
 					if( counter != 0 ) { // If the tile is not filled and there has been a filled tile previously
@@ -55,9 +55,9 @@ public class puzzleParser {
 		
 		// Iterates through the columns
 		int j = 0;
-		while( j < puzzle[0].length ) {
-			for( int i = 0; i < puzzle.length; i++ ) {
-				if( puzzle[i][j] > 0 ) { // If the tile is filled then the counter is incremented
+		while( j < puzzle.get(0).size() ) {
+			for( int i = 0; i < puzzle.size(); i++ ) {
+				if( puzzle.get(i).get(j) > 0 ) { // If the tile is filled then the counter is incremented
 					counter++;
 				} else { // Else the value of the counter is added to a list 
 					if( counter != 0 ) { // as long as there is a valid value in the counter
