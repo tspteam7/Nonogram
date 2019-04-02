@@ -194,6 +194,7 @@ public class Tester {
 		
 	}
 	
+
 	
 	@Test
 	public void puzzleImageLoaderTest() {
@@ -212,5 +213,15 @@ public class Tester {
 	
 	
 	
+	@Test
+	public void testLoad() {
+		Puzzle obj = new Puzzle(1, "admin");
+		String temp1 = "010101010";
+		String temp2 = "000000000";
+		assertTrue(temp1.equals(obj.dataToString(obj.getMaster())));
+		assertTrue(temp2.equals(obj.dataToString(obj.getWorking())));
+	}
+	
+
 
 }
