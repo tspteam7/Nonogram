@@ -64,12 +64,11 @@ public class TuturiolGUI extends Application{
             b.setMinWidth(70);
             b.setOnAction(new EventHandler<ActionEvent>() {
     		    @Override public void handle(ActionEvent e) {
-    		    	String address = "C:\\Users\\Frank\\Desktop\\Game pics\\Puzzle" + temp + ".png";
+    		    	String address = "C:\\Users\\Frank\\Desktop\\tsp19\\Nonogram\\TutorialPics\\Puzzle" + temp + ".png";
     		    	
     		    	NonogramGUI game = new NonogramGUI();
     		    	PuzzleImageLoader load = new PuzzleImageLoader(address);
     		    	puzzleParser parse = new puzzleParser();
-    		    	load.convertPic();
     		    	
     		    	ArrayList<ArrayList<Integer>> master = load.pOutput();
     		    	ArrayList<ArrayList<Integer>> ri = new ArrayList<ArrayList<Integer>>();

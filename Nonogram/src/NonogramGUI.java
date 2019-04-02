@@ -113,13 +113,17 @@ public class NonogramGUI extends Application {
         stage.show();
 	}
     
-    public void setInfo(ArrayList<ArrayList<Integer>> m, ArrayList<ArrayList<Integer>> r, ArrayList<ArrayList<Integer>> c, boolean isTutorial) {
+    public void setInfo(ArrayList<ArrayList<Integer>> m, ArrayList<ArrayList<Integer>> r, ArrayList<ArrayList<Integer>> c,ArrayList<ArrayList<Integer>> wb, boolean isTutorial) {
     	masterList = m;
     	rowInfoList = r;
     	colInfoList = c;
     	fromTutorial = isTutorial;
     	masterRow = m.size();
     	masterCol = m.get(0).size();
+    	
+    	if (!wb.equals(null)) {
+    		boardList = wb;
+    	}
     }
 	
     /**
