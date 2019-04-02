@@ -73,10 +73,11 @@ public class TuturiolGUI extends Application{
     		    	ArrayList<ArrayList<Integer>> master = load.pOutput();
     		    	ArrayList<ArrayList<Integer>> ri = new ArrayList<ArrayList<Integer>>();
     		    	ArrayList<ArrayList<Integer>> ci = new ArrayList<ArrayList<Integer>>();
+    		    	ArrayList<ArrayList<Integer>> wb = null;
     		    	
     		    	parse.getClues(ri, ci, master);
     		    	
-    		    	game.setInfo(master,ri,ci,true);
+    		    	game.setInfo(master,ri,ci,wb,true);
     		    	
     		    	for(int i = 0; i < master.size(); i++) {
     		    		for(int j = 0; j < master.get(i).size(); j++) {
