@@ -197,17 +197,25 @@ public class Tester {
 
 	
 	@Test
-	public void puzzleImageLoaderTest() {
+	public void puzzleImageLoaderTest1() {
 		PuzzleImageLoader test = new PuzzleImageLoader("C:\\Users\\Michael\\Pictures\\Nonogram Puzzles\\Puzzle1.png");
 		//test.convertPic();
 		ArrayList<ArrayList<Integer>> confirm = test.pOutput();
 		
-		System.out.println(confirm.get(0).size());
-		System.out.println(confirm.get(0).get(6));
-		assertTrue(confirm.get(0).get(2).equals(0));
+		//System.out.println(confirm.size());
+		//System.out.println(confirm.get(0).get(2));
+		assertTrue(confirm.get(0).get(2).equals(1));
 	}
 	
-	
+	@Test
+	public void puzzleImageLoaderTest3() {
+		PuzzleImageLoader test = new PuzzleImageLoader("C:\\Users\\Michael\\Pictures\\Nonogram Puzzles\\Puzzle3.png");
+		ArrayList<ArrayList<Integer>> confirm = test.pOutput();
+		
+		System.out.println(confirm.size());
+		
+		assertTrue(confirm.get(4).get(4).equals(1));
+	}
 	
 	
 	
