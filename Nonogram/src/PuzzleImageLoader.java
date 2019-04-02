@@ -12,7 +12,6 @@ public class PuzzleImageLoader {
 	
 	PuzzleImageLoader(String address) {
 		try {
-			
 			img = ImageIO.read(new File(address));	
 		//Format :
 		//"C:\\Documents and settings\\<username>\\My Documents\\images.jpeg"
@@ -24,18 +23,22 @@ public class PuzzleImageLoader {
 		currentPuzzle = new ArrayList<ArrayList<Integer>>();
 		int width = img.getWidth();
 		int height = img.getHeight();
-		ArrayList<Integer> inner = new ArrayList<Integer>();
+		
 		
 		for(int i=0;i<height;i++) {
+			ArrayList<Integer> inner = new ArrayList<Integer>();
 			for(int j=0; j<width;j++) {
-				int p = img.getRGB(i,  j);
-				if(p>0){
+				Color p = new Color (img.getRGB(i,  j));
+				int r = p.getRed();
+				int g = p.getGreen();
+				int b = p.getBlue();
+				if(r>0 && g>0 && b>0){
 					inner.add(0);
 				}else {
 					inner.add(1);
 				}
-			currentPuzzle.add(inner);
 			}	
+			currentPuzzle.add(inner);
 		}
 	}
 	

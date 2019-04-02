@@ -123,6 +123,13 @@ public class NonogramGUI extends Application {
     	
     	if (!isTutorial) {
     		boardList = wb;
+    	}else {
+    		for(int i = 0; i < masterRow ; i++) {
+    			boardList.add(new ArrayList<Integer>());
+    			for(int j = 0; j < masterCol ; j++) {
+    				boardList.get(i).add(0);
+    			}
+    		}
     	}
     }
 	
