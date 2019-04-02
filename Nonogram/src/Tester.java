@@ -194,5 +194,23 @@ public class Tester {
 		
 	}
 	
+	
+	@Test
+	public void puzzleImageLoaderTest() {
+		PuzzleImageLoader test = new PuzzleImageLoader("C:\\Users\\Michael\\Pictures\\Nonogram Puzzles\\Puzzle1.png");
+		//test.convertPic();
+		ArrayList<ArrayList<Integer>> confirm = test.pOutput();
+		
+		System.out.println(confirm.get(0).size());
+		System.out.println(confirm.get(0).get(6));
+		assertTrue(confirm.get(0).get(2).equals(0));
+	}
+	
+	
+	
+	
+	
+	
+	
 
 }
