@@ -55,6 +55,8 @@ public class ViewPuzzlesGUI extends Application {
 				puzzleParser parseInfo = new puzzleParser();
 				parseInfo.getClues(rowInfo, colInfo, puzzle.getMaster());
 				NonogramGUI openGUI = new NonogramGUI(rowInfo, colInfo, puzzle.getMaster(), puzzle.getWorking(), false);
+				openGUI.start(new Stage());
+				primaryStage.close();
 			});
 			
 			if(i % 4 != 0 || i == 0) {
