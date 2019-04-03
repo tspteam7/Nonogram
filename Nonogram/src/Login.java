@@ -132,7 +132,7 @@ public class Login extends Application {
             }
         });
 		
-		// keyboard event to login when 'enter' is pressed
+		//keyboard event to login when 'enter' is pressed
 		scene.setOnKeyPressed( ke -> {
 			KeyCode keyCode = ke.getCode();
 			if( keyCode.equals(KeyCode.ENTER)) {
