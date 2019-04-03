@@ -191,7 +191,6 @@ public class NonogramGUI extends Application {
 				//When button is pressed
 				b.setOnAction(new EventHandler<ActionEvent>() {
 				    @Override public void handle(ActionEvent e) {
-				    	System.out.println(row + ", " + column);
 				    	//If current button is white
 				    	if(boardList.get(row).get(column) == 0) {
 				    		//Change the button to black and remove labels
