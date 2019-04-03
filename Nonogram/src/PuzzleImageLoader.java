@@ -23,25 +23,24 @@ public class PuzzleImageLoader {
 		currentPuzzle = new ArrayList<ArrayList<Integer>>();
 		int width = img.getWidth();
 		int height = img.getHeight();
-		System.out.println(width + " " + height);
 		
 		
 		for(int i=0;i<height;i++) {
 			ArrayList<Integer> inner = new ArrayList<Integer>();
 			for(int j=0; j<width;j++) {
-				Color p = new Color (img.getRGB(i,  j));
+				Color p = new Color (img.getRGB(j,  i));
 				int r = p.getRed();
 				int g = p.getGreen();
 				int b = p.getBlue();
-				System.out.println("(" + i + "," + j + ") " + r + " " + g + " " + b);
 				if(r>0 && g>0 && b>0){
 					inner.add(0);
 				}else {
 					inner.add(1);
 				}
-			currentPuzzle.add(inner);
 			
-			}	
+			}
+			
+			currentPuzzle.add(inner);
 		}
 	}
 	

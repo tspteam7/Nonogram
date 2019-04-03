@@ -155,8 +155,8 @@ public class NonogramGUI extends Application {
 		//Create the hint boxes for each Column at the top
 		for (int c = 1 ; c < j+1; c++) {
 			String t = "";
-			for(int p = 0; p < rowInfoList.get(c-1).size(); p++) {
-				t = t + rowInfoList.get(c-1).get(p) + "\n";
+			for(int p = 0; p < colInfoList.get(c-1).size(); p++) {
+				t = t + colInfoList.get(c-1).get(p) + "\n";
 			}
 			Label label = new Label(t);
 			label.setTextFill(Color.WHITE);
@@ -168,8 +168,8 @@ public class NonogramGUI extends Application {
 		for(int r = 1 ; r < j+1; r++) {
 			//Create the hint boxes for each row on the left side of the puzzle
 			String t = "";
-			for(int p = 0; p < colInfoList.get(r-1).size(); p++) {
-				t = t + colInfoList.get(r-1).get(p) + " ";
+			for(int p = 0; p < rowInfoList.get(r-1).size(); p++) {
+				t = t + rowInfoList.get(r-1).get(p) + " ";
 			}
 			Label label = new Label(t);
 			label.setTextFill(Color.WHITE);
