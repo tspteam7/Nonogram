@@ -6,8 +6,15 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class ViewPuzzlesGUI extends Application {
+	
+	String username;
+	
+	public ViewPuzzlesGUI(String username) {
+		this.username = username;
+	}
 	
 	@Override
 	public void start( Stage primaryStage) {
@@ -36,11 +43,19 @@ public class ViewPuzzlesGUI extends Application {
 		//put a box in the gridpane for each one
 		for(int i = 0; i < numPuzzles; i++) {
 			int rowIndex = 0;
+			int tempInt[] = {i + 1};
 			Button temp = new Button();
 			temp.setText(String.valueOf(i + 1));
 			
 			//create the action even for each button to open up NonogramGUI
-			
+			temp.setOnAction(e -> {
+				Puzzle puzzle = new Puzzle(tempInt[0], username);
+				ArrayList<ArrayList<Integer>> rowInfo = new ArrayList<>();
+				ArrayList<ArrayList<Integer>> colInfo = new ArrayList<>();
+				puzzleParser parseInfo = new puzzleParser();
+				parseInfo.getClues(rowInfo, colInfo, puzzle.getMaster());
+				NonogramGUI openGUI = new NonogramGUI(rowInfo, colInfo, puzzle.getMaster(), puzzle.getWorking(), false);
+			});
 			
 			if(i % 4 != 0 || i == 0) {
 				root.add(temp, i % 4, rowIndex);
