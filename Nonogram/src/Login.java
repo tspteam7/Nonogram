@@ -87,7 +87,7 @@ public class Login extends Application {
         				rs.first();
         				if(password.getText().equals(rs.getString("password"))) {
         					//NonogramGUI n = new NonogramGUI();
-        					Menu n = new Menu(); // Testing opening the menu
+        					Menu n = new Menu(username.getText()); // Testing opening the menu
         					n.start(new Stage());
         					primaryStage.close();
         				}
@@ -119,7 +119,7 @@ public class Login extends Application {
         				invalidLogin.setVisible(true);
         			}
         			else {
-        				Menu n = new Menu(); // Testing opening the menu
+        				Menu n = new Menu(username.getText()); // Testing opening the menu
         				n.start(new Stage());
         				primaryStage.close();
         			}
