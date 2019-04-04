@@ -214,6 +214,13 @@ public class Tester {
 		
 		System.out.println(confirm.size());
 		
+		for(int i=0; i<confirm.size(); i++) {
+			for(int j=0; j<confirm.get(i).size(); j++) {
+				System.out.print(confirm.get(i).get(j) + " ");
+			}
+			System.out.print("\n");
+		}
+		
 		assertTrue(confirm.get(4).get(4).equals(1));
 	}
 	
