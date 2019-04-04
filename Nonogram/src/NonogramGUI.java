@@ -198,7 +198,7 @@ public class NonogramGUI extends Application {
 				Button b = new Button();
 				b.setMinWidth(500/i);
 				b.setMinHeight(500/j);
-	    		b.setStyle("-fx-border-color:#010101;-fx-background-color:#FEFEFE;");
+	    		b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#FEFEFE;");
 	    		
 	    		//get current coordinates
 				int row = r -1;
@@ -210,7 +210,7 @@ public class NonogramGUI extends Application {
 				    	//If current button is white
 				    	if(boardList.get(row).get(column) == 0) {
 				    		//Change the button to black and remove labels
-				    		b.setStyle("-fx-border-color:#010101;-fx-background-color:#010101;");
+				    		b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#010101;");
 				    		b.setText("");
 				    		
 				    		//Update the board and compare to master
@@ -219,7 +219,7 @@ public class NonogramGUI extends Application {
 				    	}else {
 				    		if(boardList.get(row).get(column) == 1) {
 					    		//Change the button to white and remove labels
-					    		b.setStyle("-fx-border-color:#010101;-fx-background-color:#FEFEFE;");
+					    		b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#FEFEFE;");
 					    		b.setText("X");
 					    		
 					    		//Update the board and compare to master
