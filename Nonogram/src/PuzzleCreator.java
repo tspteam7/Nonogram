@@ -25,6 +25,9 @@ import javafx.stage.Stage;
 
 public class PuzzleCreator extends Application{
 
+	//Create string to store username
+	String username;
+	
 	//Create the global stage variables
     private Stage stage = null;
     
@@ -48,6 +51,10 @@ public class PuzzleCreator extends Application{
     
     //The board being used on the game, default is all 0
     private ArrayList<ArrayList<Integer>> boardList = new ArrayList<ArrayList<Integer>>();
+    
+    public PuzzleCreator(String user) {
+    	username = user;
+    }
     
 	@Override
 	public void start(Stage arg0) throws Exception {
@@ -157,22 +164,15 @@ public class PuzzleCreator extends Application{
         gridPane.setMaxWidth(500);
         
         //Create a close button
-        Button close = new Button("Close");
+        Button close = new Button("Back");
         close.setMinHeight(50);
         close.setMinWidth(70);
         close.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
 		    	Stage stage = (Stage) close.getScene().getWindow();
 		    	stage.close();
-		    	if(fromTutorial) {
-		        	TuturiolGUI tutgui = new TuturiolGUI();
-		        	try {
-						tutgui.start(new Stage());
-					} catch (Exception a) {
-						a.printStackTrace();
-					}
-		        	
-		    	}
+		    	Menu menu = new Menu(username);
+		    	menu.start(new Stage());
 		    }
 		});
         

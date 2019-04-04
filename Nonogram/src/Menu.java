@@ -80,7 +80,19 @@ public class Menu extends Application {
 			}
         });
         
-        createBtn.setOnAction(e -> primaryStage.setScene(createScene));
+        createBtn.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+	        	PuzzleCreator pc = new PuzzleCreator(username);
+	        	try {
+					pc.start(new Stage());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+	        	primaryStage.close();
+			}
+        });
         createSceneButton.setOnAction(e -> primaryStage.setScene(menuScene));
         
         primaryStage.setScene(menuScene);
