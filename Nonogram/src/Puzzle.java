@@ -125,7 +125,7 @@ public class Puzzle {
 			stmt.setInt(1, puzzle.get(0).size());
 			stmt.setInt(2, puzzle.size());
 			stmt.setString(3, data);
-			rs = stmt.executeQuery();
+			stmt.execute();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
