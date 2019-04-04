@@ -45,6 +45,9 @@ public class NonogramGUI extends Application {
     //If this puzzle is from tutorial
     boolean fromTutorial = false;
     
+    //Username
+    private String username = "";
+    
     //Arrays to store the data about how pixels lay out on the grid
     private ArrayList<ArrayList<Integer>> rowInfoList = new ArrayList<ArrayList<Integer>>();
     private ArrayList<ArrayList<Integer>> colInfoList = new ArrayList<ArrayList<Integer>>();
@@ -56,7 +59,11 @@ public class NonogramGUI extends Application {
     private ArrayList<ArrayList<Integer>> boardList = new ArrayList<ArrayList<Integer>>();
     
 	
-    @Override
+    public NonogramGUI(String s) {
+		username = s;
+	}
+
+	@Override
     /**
      * Create the stage to play the game
      */
@@ -87,13 +94,20 @@ public class NonogramGUI extends Application {
 		    	Stage stage = (Stage) close.getScene().getWindow();
 		    	stage.close();
 		    	if(fromTutorial) {
-		        	TuturiolGUI tutgui = new TuturiolGUI();
+		        	TuturiolGUI tutgui = new TuturiolGUI(username);
 		        	try {
 						tutgui.start(new Stage());
 					} catch (Exception a) {
 						a.printStackTrace();
 					}
 		        	
+		    	}else {
+		    		ViewPuzzlesGUI viewGUI = new ViewPuzzlesGUI(username);
+		        	try {
+						viewGUI.start(new Stage());
+					} catch (Exception a) {
+						a.printStackTrace();
+					}
 		    	}
 		    }
 		});
@@ -160,6 +174,7 @@ public class NonogramGUI extends Application {
 			}
 			Label label = new Label(t);
 			label.setTextFill(Color.WHITE);
+			label.autosize();
 			grid.add(label, c, 0);
 			GridPane.setHalignment(label, HPos.CENTER);
 		}
@@ -173,6 +188,7 @@ public class NonogramGUI extends Application {
 			}
 			Label label = new Label(t);
 			label.setTextFill(Color.WHITE);
+			label.autosize();
 			grid.add(label, 0, r);
 			GridPane.setHalignment(label, HPos.CENTER);
 			
@@ -231,15 +247,6 @@ public class NonogramGUI extends Application {
 		//Return the grid
 		return grid;
 	}
-
-    /**
-     * Launches the application
-     * 
-     * @param args
-     */
-	public static void main(String[] args) {
-        launch(args);
-    }
 	
 	/**
 	 * Compares the master board vs the player grid and sends a popup if
@@ -249,10 +256,13 @@ public class NonogramGUI extends Application {
 		boolean equals = true;
 		
 		//Compare each value in the array to see if they are equal
+		out:
 		for(int r = 0 ; r < masterRow ; r++) {
 			for(int c = 0 ; c < masterCol ; c++) {
-				if(masterList.get(r).get(c) != boardList.get(r).get(c)) {
+				if(masterList.get(r).get(c) != boardList.get(r).get(c) && !(masterList.get(r).get(c) == 0 && boardList.get(r).get(c) == 2) && !(masterList.get(r).get(c) == 2 && boardList.get(r).get(c) == 0)) {
 					equals = false;
+					System.out.println(r + ", " + c + ": Should be:" + masterList.get(r).get(c) + " , was: " + boardList.get(r).get(c));
+					break out;
 				}
 			}
 		}
@@ -289,6 +299,7 @@ public class NonogramGUI extends Application {
 			popupwindow.showAndWait();
 		}
 	}
+	
 	
 	private void build(){
 		masterList.add(new ArrayList<Integer>());

@@ -24,12 +24,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class TuturiolGUI extends Application{
-	Stage stage;
+	
+	private String username = "";
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		//Make the root to hold everything
-    	stage = new Stage();
         StackPane root = new StackPane();
         
         //Title
@@ -51,8 +51,14 @@ public class TuturiolGUI extends Application{
         close.setMinWidth(70);
         close.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
-		    	Stage stage = (Stage) close.getScene().getWindow();
-		    	stage.close();
+		    	primaryStage.close();
+		    	
+		    	Menu menu = new Menu(username);
+	        	try {
+					menu.start(new Stage());
+				} catch (Exception a) {
+					a.printStackTrace();
+				}
 		    }
 		});
         
@@ -66,7 +72,7 @@ public class TuturiolGUI extends Application{
     		    @Override public void handle(ActionEvent e) {
     		    	String address = "C:\\Users\\Frank\\Desktop\\tsp19\\Nonogram\\TutorialPics\\Puzzle" + temp + ".png";
     		    	
-    		    	NonogramGUI game = new NonogramGUI();
+    		    	NonogramGUI game = new NonogramGUI(username);
     		    	PuzzleImageLoader load = new PuzzleImageLoader(address);
     		    	puzzleParser parse = new puzzleParser();
     		    	
@@ -104,8 +110,12 @@ public class TuturiolGUI extends Application{
         
         //Create a new scene with the root and show it
         Scene scene = new Scene(root, 1000, 1000);
-        stage .setScene(scene);
-        stage .show();
+        primaryStage.setScene(scene);
+        primaryStage.show();
+	}
+	
+	public TuturiolGUI(String s) {
+		username = s;
 	}
 
 }

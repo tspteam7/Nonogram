@@ -60,7 +60,7 @@ public class Menu extends Application {
 
 			@Override
 			public void handle(ActionEvent arg0) {
-	        	NonogramGUI gui = new NonogramGUI();
+	        	NonogramGUI gui = new NonogramGUI(username);
 	        	gui.start(new Stage());
 	        	primaryStage.close();
 			}
@@ -70,7 +70,7 @@ public class Menu extends Application {
 
 			@Override
 			public void handle(ActionEvent arg0) {
-	        	TuturiolGUI tutgui = new TuturiolGUI();
+	        	TuturiolGUI tutgui = new TuturiolGUI(username);
 	        	try {
 					tutgui.start(new Stage());
 				} catch (Exception e) {
