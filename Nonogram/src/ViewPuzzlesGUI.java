@@ -12,9 +12,15 @@ public class ViewPuzzlesGUI extends Application {
 	
 	String username;
 	
+	
 	public ViewPuzzlesGUI(String username) {
 		this.username = username;
 	}
+	
+	public ViewPuzzlesGUI() {
+		username = null;
+	}
+	
 	
 	@Override
 	public void start( Stage primaryStage) {
@@ -47,6 +53,7 @@ public class ViewPuzzlesGUI extends Application {
 			Button temp = new Button();
 			temp.setText(String.valueOf(i + 1));
 			
+			
 			//create the action even for each button to open up NonogramGUI
 			temp.setOnAction(e -> {
 				Puzzle puzzle = new Puzzle(tempInt[0], username);
@@ -54,8 +61,12 @@ public class ViewPuzzlesGUI extends Application {
 				ArrayList<ArrayList<Integer>> colInfo = new ArrayList<>();
 				puzzleParser parseInfo = new puzzleParser();
 				parseInfo.getClues(rowInfo, colInfo, puzzle.getMaster());
-				NonogramGUI openGUI = new NonogramGUI(rowInfo, colInfo, puzzle.getMaster(), puzzle.getWorking(), false);
+				NonogramGUI openGUI = new NonogramGUI();
+				openGUI.setInfo(puzzle.getMaster(), rowInfo, colInfo, puzzle.getWorking(), false);
+				openGUI.start(new Stage());
+				primaryStage.close();
 			});
+			
 			
 			if(i % 4 != 0 || i == 0) {
 				root.add(temp, i % 4, rowIndex);

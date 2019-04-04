@@ -68,13 +68,15 @@ public class Tester {
 	
 	@Test
 	public void testParse() {
-		int[][] testPuzzle = {
-				{0,0,1,0,0},
-				{0,0,0,0,0},
-				{1,0,1,0,1},
-				{0,0,0,0,0},
-				{0,0,1,0,0}
-		};
+		List<List<Integer>> puzzle = new ArrayList<>();
+		
+		puzzle.add(  Arrays.asList(0, 0, 1, 0, 0));
+		puzzle.add(  Arrays.asList(0, 0, 0, 0, 0));
+		puzzle.add(  Arrays.asList(1, 0, 1, 0, 1));
+		puzzle.add(  Arrays.asList(0, 0, 0, 0, 0));
+		puzzle.add(  Arrays.asList(0, 0, 1, 0, 0));
+		
+		
 		List<ArrayList<Integer>> testRow = new ArrayList<ArrayList<Integer>>();
 		List<ArrayList<Integer>> testCol = new ArrayList<ArrayList<Integer>>();
 		ArrayList<Integer> row1 = new ArrayList<Integer>();
@@ -119,7 +121,7 @@ public class Tester {
 		
 		puzzleParser obj = new puzzleParser();
 		
-		obj.getClues(methodRow, methodCol, testPuzzle);
+		obj.getClues(methodRow, methodCol, puzzle);
 		
 		for( int i = 0; i < methodRow.size(); i++ ) {
 			for( int j = 0; j < methodRow.get(i).size(); j++ ) {
@@ -213,6 +215,13 @@ public class Tester {
 		ArrayList<ArrayList<Integer>> confirm = test.pOutput();
 		
 		System.out.println(confirm.size());
+		
+		for(int i=0; i<confirm.size(); i++) {
+			for(int j=0; j<confirm.get(i).size(); j++) {
+				System.out.print(confirm.get(i).get(j) + " ");
+			}
+			System.out.print("\n");
+		}
 		
 		assertTrue(confirm.get(4).get(4).equals(1));
 	}

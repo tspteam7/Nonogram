@@ -60,8 +60,8 @@ public class Menu extends Application {
 
 			@Override
 			public void handle(ActionEvent arg0) {
-	        	NonogramGUI gui = new NonogramGUI(username);
-	        	gui.start(new Stage());
+	        	ViewPuzzlesGUI open = new ViewPuzzlesGUI(username);
+	        	open.start(new Stage());
 	        	primaryStage.close();
 			}
         });
