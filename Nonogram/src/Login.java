@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class Login extends Application {
@@ -34,7 +35,7 @@ public class Login extends Application {
 		//Sets the spacing between elements
 		btnusrpass.setVgap(8);					
 		center.setVgap(8);
-		top.setVgap(15);
+		top.setVgap(5);
 		
 		//Buttons
 		Button btnLogin = new Button();					//Login button
@@ -50,9 +51,10 @@ public class Login extends Application {
 
 		//Title Text
 		Text title = new Text();
-		title.setText("\"Nonogram\"");								//What the title displays
+		title.setText("Nonogram:\nA Logic Puzzle Game");			//What the title displays
 		title.setFont(Font.font("System", FontWeight.BOLD, 30));	//Bolding the title and making it bigger
 		title.setStyle("-fx-fill: #551400");						//Assign the color of the title
+		title.setTextAlignment(TextAlignment.CENTER);
 		
 		//Error Text
 		Text invalidLogin = new Text();								
@@ -62,7 +64,7 @@ public class Login extends Application {
 		invalidLogin.setVisible(false);								//Only display when there is an error
 		
 		//Adding the elements together
-		top.add( title, 0, 3);						//Title goes into the top of borderpane
+		top.add( title, 0, 7);						//Title goes into the top of borderpane
 		top.setAlignment(Pos.CENTER);				//And gets centered
 		
 		userPass.getChildren().add(username);		//userPass gets the username and password fields
