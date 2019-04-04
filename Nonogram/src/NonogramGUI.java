@@ -39,8 +39,11 @@ public class NonogramGUI extends Application {
     private Stage stage = null;
     
     //Create public variable keeping track of number of rows and columns of the puzzle
-    private int masterRow = 5;
-    private int masterCol = 5;
+    private int masterRow = 0;
+    private int masterCol = 0;
+    
+    //If this puzzle is from tutorial
+    boolean fromTutorial = false;
     
     //Arrays to store the data about how pixels lay out on the grid
     private ArrayList<ArrayList<Integer>> rowInfoList = new ArrayList<ArrayList<Integer>>();
@@ -83,6 +86,15 @@ public class NonogramGUI extends Application {
 		    @Override public void handle(ActionEvent e) {
 		    	Stage stage = (Stage) close.getScene().getWindow();
 		    	stage.close();
+		    	if(fromTutorial) {
+		        	TuturiolGUI tutgui = new TuturiolGUI();
+		        	try {
+						tutgui.start(new Stage());
+					} catch (Exception a) {
+						a.printStackTrace();
+					}
+		        	
+		    	}
 		    }
 		});
         
@@ -101,10 +113,24 @@ public class NonogramGUI extends Application {
         stage.show();
 	}
     
-    public void setInfo(ArrayList<ArrayList<Integer>> m, ArrayList<ArrayList<Integer>> r, ArrayList<ArrayList<Integer>> c) {
+    public void setInfo(ArrayList<ArrayList<Integer>> m, ArrayList<ArrayList<Integer>> r, ArrayList<ArrayList<Integer>> c, ArrayList<ArrayList<Integer>> wb, boolean isTutorial) {
     	masterList = m;
     	rowInfoList = r;
     	colInfoList = c;
+    	fromTutorial = isTutorial;
+    	masterRow = m.size();
+    	masterCol = m.get(0).size();
+    	
+    	if (!isTutorial) {
+    		boardList = wb;
+    	}else {
+    		for(int i = 0; i < masterRow ; i++) {
+    			boardList.add(new ArrayList<Integer>());
+    			for(int j = 0; j < masterCol ; j++) {
+    				boardList.get(i).add(0);
+    			}
+    		}
+    	}
     }
 	
     /**
@@ -129,8 +155,8 @@ public class NonogramGUI extends Application {
 		//Create the hint boxes for each Column at the top
 		for (int c = 1 ; c < j+1; c++) {
 			String t = "";
-			for(int p = 0; p < rowInfoList.get(c-1).size(); p++) {
-				t = t + rowInfoList.get(c-1).get(p) + "\n";
+			for(int p = 0; p < colInfoList.get(c-1).size(); p++) {
+				t = t + colInfoList.get(c-1).get(p) + "\n";
 			}
 			Label label = new Label(t);
 			label.setTextFill(Color.WHITE);
@@ -142,8 +168,8 @@ public class NonogramGUI extends Application {
 		for(int r = 1 ; r < j+1; r++) {
 			//Create the hint boxes for each row on the left side of the puzzle
 			String t = "";
-			for(int p = 0; p < colInfoList.get(r-1).size(); p++) {
-				t = t + colInfoList.get(r-1).get(p) + " ";
+			for(int p = 0; p < rowInfoList.get(r-1).size(); p++) {
+				t = t + rowInfoList.get(r-1).get(p) + " ";
 			}
 			Label label = new Label(t);
 			label.setTextFill(Color.WHITE);
@@ -165,23 +191,34 @@ public class NonogramGUI extends Application {
 				//When button is pressed
 				b.setOnAction(new EventHandler<ActionEvent>() {
 				    @Override public void handle(ActionEvent e) {
-				    	//If button is pressed and its black
-				    	if(b.getStyle().equals("-fx-border-color:#010101;-fx-background-color:#010101;")) {
-				    		//Change button to white
-				    		b.setStyle("-fx-border-color:#010101;-fx-background-color:#FEFEFE;");
+				    	//If current button is white
+				    	if(boardList.get(row).get(column) == 0) {
+				    		//Change the button to black and remove labels
+				    		b.setStyle("-fx-border-color:#010101;-fx-background-color:#010101;");
+				    		b.setText("");
 				    		
 				    		//Update the board and compare to master
-				    		boardList.get(row).set(column, 0);
-				    		compare();
-				    	}
-				    	//else change the button the black
-				    	else {
-				    		//Change the button to black
-				    		b.setStyle("-fx-border-color:#010101;-fx-background-color:#010101;");
-				    		
-				    		//Update the board and compare again
 				    		boardList.get(row).set(column, 1);
 				    		compare();
+				    	}else {
+				    		if(boardList.get(row).get(column) == 1) {
+					    		//Change the button to white and remove labels
+					    		b.setStyle("-fx-border-color:#010101;-fx-background-color:#FEFEFE;");
+					    		b.setText("X");
+					    		
+					    		//Update the board and compare to master
+					    		boardList.get(row).set(column, 2);
+					    		compare();
+				    		}else {
+				    			if(boardList.get(row).get(column) == 2) {
+				    				//remove labels
+						    		b.setText("");
+						    		
+						    		//Update the board and compare to master
+						    		boardList.get(row).set(column, 0);
+						    		compare();
+				    			}
+				    		}
 				    	}
 				    }
 				});

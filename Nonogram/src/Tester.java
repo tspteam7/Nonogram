@@ -197,4 +197,41 @@ public class Tester {
 	}
 	
 
+	
+	@Test
+	public void puzzleImageLoaderTest1() {
+		PuzzleImageLoader test = new PuzzleImageLoader("C:\\Users\\Michael\\Pictures\\Nonogram Puzzles\\Puzzle1.png");
+		//test.convertPic();
+		ArrayList<ArrayList<Integer>> confirm = test.pOutput();
+		
+		//System.out.println(confirm.size());
+		//System.out.println(confirm.get(0).get(2));
+		assertTrue(confirm.get(0).get(2).equals(1));
+	}
+	
+	@Test
+	public void puzzleImageLoaderTest3() {
+		PuzzleImageLoader test = new PuzzleImageLoader("C:\\Users\\Michael\\Pictures\\Nonogram Puzzles\\Puzzle3.png");
+		ArrayList<ArrayList<Integer>> confirm = test.pOutput();
+		
+		System.out.println(confirm.size());
+		
+		assertTrue(confirm.get(4).get(4).equals(1));
+	}
+	
+	
+	
+	
+	
+	@Test
+	public void testLoad() {
+		Puzzle obj = new Puzzle(1, "admin");
+		String temp1 = "010101010";
+		String temp2 = "000000000";
+		assertTrue(temp1.equals(obj.dataToString(obj.getMaster())));
+		assertTrue(temp2.equals(obj.dataToString(obj.getWorking())));
+	}
+	
+
+
 }
