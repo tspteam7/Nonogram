@@ -167,7 +167,7 @@ public class NonogramGUI extends Application {
 		grid.add(test, 0, 0);
 		
 		//Create the hint boxes for each Column at the top
-		for (int c = 1 ; c < j+1; c++) {
+		for (int c = 1 ; c < i+1; c++) {
 			String t = "";
 			for(int p = 0; p < colInfoList.get(c-1).size(); p++) {
 				t = t + colInfoList.get(c-1).get(p) + "\n";
@@ -196,8 +196,8 @@ public class NonogramGUI extends Application {
 			for(int c = 1; c < i+1; c++) {
 				//Create the button,format size,and set default to be white
 				Button b = new Button();
-				b.setMinWidth(500/i);
-				b.setMinHeight(500/j);
+				b.setMinWidth(Math.min(500/i, 500/j));
+				b.setMinHeight(Math.min(500/i, 500/j));
 	    		b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#FEFEFE;");
 	    		
 	    		//get current coordinates
