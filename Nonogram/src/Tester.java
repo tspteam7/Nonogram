@@ -68,13 +68,49 @@ public class Tester {
 	
 	@Test
 	public void testParse() {
-		List<List<Integer>> puzzle = new ArrayList<>();
+		List<ArrayList<Integer>> puzzle = new ArrayList<>();
 		
-		puzzle.add(  Arrays.asList(0, 0, 1, 0, 0));
-		puzzle.add(  Arrays.asList(0, 0, 0, 0, 0));
-		puzzle.add(  Arrays.asList(1, 0, 1, 0, 1));
-		puzzle.add(  Arrays.asList(0, 0, 0, 0, 0));
-		puzzle.add(  Arrays.asList(0, 0, 1, 0, 0));
+		ArrayList<Integer> puzzleRow1 = new ArrayList<>();
+		ArrayList<Integer> puzzleRow2 = new ArrayList<>();
+		ArrayList<Integer> puzzleRow3 = new ArrayList<>();
+		ArrayList<Integer> puzzleRow4 = new ArrayList<>();
+		ArrayList<Integer> puzzleRow5 = new ArrayList<>();
+		
+		puzzleRow1.add(0);
+		puzzleRow1.add(0);
+		puzzleRow1.add(1);
+		puzzleRow1.add(0);
+		puzzleRow1.add(0);
+		
+		puzzleRow2.add(0);
+		puzzleRow2.add(0);
+		puzzleRow2.add(0);
+		puzzleRow2.add(0);
+		puzzleRow2.add(0);
+		
+		puzzleRow3.add(1);
+		puzzleRow3.add(0);
+		puzzleRow3.add(1);
+		puzzleRow3.add(0);
+		puzzleRow3.add(1);
+		
+		puzzleRow4.add(0);
+		puzzleRow4.add(0);
+		puzzleRow4.add(0);
+		puzzleRow4.add(0);
+		puzzleRow4.add(0);
+		
+		puzzleRow5.add(0);
+		puzzleRow5.add(0);
+		puzzleRow5.add(1);
+		puzzleRow5.add(0);
+		puzzleRow5.add(0);
+		
+		puzzle.add(  puzzleRow1 );
+		puzzle.add(  puzzleRow2 );
+		puzzle.add(  puzzleRow3 );
+		puzzle.add(  puzzleRow4 );
+		puzzle.add(  puzzleRow5 );
 		
 		
 		List<ArrayList<Integer>> testRow = new ArrayList<ArrayList<Integer>>();
@@ -121,7 +157,7 @@ public class Tester {
 		
 		puzzleParser obj = new puzzleParser();
 		
-		obj.getClues(methodRow, methodCol, puzzle);
+		obj.getClues(methodRow, methodCol, (List<ArrayList<Integer>>)puzzle);
 		
 		for( int i = 0; i < methodRow.size(); i++ ) {
 			for( int j = 0; j < methodRow.get(i).size(); j++ ) {
