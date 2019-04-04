@@ -30,7 +30,7 @@ public class puzzleParser {
 	 * 
 	 */
 
-	public void getClues(List<ArrayList<Integer>> row, List<ArrayList<Integer>> col, List<List<Integer>> puzzle ) {
+	public void getClues(List<ArrayList<Integer>> row, List<ArrayList<Integer>> col, List<ArrayList<Integer>> puzzle ) {
 		int counter = 0;
 		ArrayList<Integer> temp = new ArrayList<>();
 		
