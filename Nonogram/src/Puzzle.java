@@ -121,11 +121,11 @@ public class Puzzle {
 					"sjogden",
 					"password");
 			String data = dataToString(puzzle);
-			stmt = conn.prepareStatement("INSERT INTO Puzzles (x, y, data) VALUES(?, ?, ?");
+			stmt = conn.prepareStatement("INSERT INTO Puzzles (x, y, data) VALUES(?, ?, ?)");
 			stmt.setInt(1, puzzle.get(0).size());
 			stmt.setInt(2, puzzle.size());
 			stmt.setString(3, data);
-			rs = stmt.executeQuery();
+			stmt.execute();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();

@@ -24,12 +24,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class TuturiolGUI extends Application{
-	Stage tuturiolStage; 
+	Stage stage;
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		//Make the root to hold everything
-    	tuturiolStage = new Stage();
+    	stage = new Stage();
         StackPane root = new StackPane();
         
         //Title
@@ -57,12 +57,37 @@ public class TuturiolGUI extends Application{
 		});
         
         for(int i = 1; i <= 7 ; i++) {
+        	int temp = i;
+        	
         	Button b = new Button("Tutorial " + i);
             b.setMinHeight(50);
             b.setMinWidth(70);
             b.setOnAction(new EventHandler<ActionEvent>() {
     		    @Override public void handle(ActionEvent e) {
+    		    	String address = "C:\\Users\\Frank\\Desktop\\tsp19\\Nonogram\\TutorialPics\\Puzzle" + temp + ".png";
+    		    	
     		    	NonogramGUI game = new NonogramGUI();
+    		    	PuzzleImageLoader load = new PuzzleImageLoader(address);
+    		    	puzzleParser parse = new puzzleParser();
+    		    	
+    		    	ArrayList<ArrayList<Integer>> master = load.pOutput();
+    		    	ArrayList<ArrayList<Integer>> ri = new ArrayList<ArrayList<Integer>>();
+    		    	ArrayList<ArrayList<Integer>> ci = new ArrayList<ArrayList<Integer>>();
+    		    	ArrayList<ArrayList<Integer>> wb = null;
+    		    	
+    		    	for(int i = 0; i < master.size(); i++) {
+    		    		for(int j = 0; j < master.get(i).size(); j++) {
+    		    			System.out.print(master.get(i).get(j) + " ");
+    		    		}
+    		    		System.out.println();
+    		    	}
+    		    	
+    		    	parse.getClues(ri, ci, master);
+    		    	
+    		    	game.setInfo(master,ri,ci,wb,true);
+    		    	
+    		    	game.start(new Stage());
+    		    	primaryStage.close();
     		    }
     		});
             gridPane.add(b, 0, i-1);
@@ -79,8 +104,8 @@ public class TuturiolGUI extends Application{
         
         //Create a new scene with the root and show it
         Scene scene = new Scene(root, 1000, 1000);
-        tuturiolStage .setScene(scene);
-        tuturiolStage .show();
+        stage .setScene(scene);
+        stage .show();
 	}
 
 }

@@ -155,9 +155,9 @@ public class Login extends Application {
         			else {
         				rs.first();
         				if( password.getText().equals(rs.getString("password"))) {
-        				Menu n = new Menu(username.getText());
-        				n.start(new Stage());
-        				primaryStage.close();
+        				  Menu n = new Menu(username.getText());
+        				  n.start(new Stage());
+        				  primaryStage.close();
         				} else {
         					invalidLogin.setText("Invalid login information");
         					invalidLogin.setVisible(true);
