@@ -76,13 +76,23 @@ public class ViewPuzzlesGUI extends Application {
 			}
 		}
 		
+		Button back = new Button();
+		back.setText("Back to Menu");
 		root.setAlignment(Pos.CENTER);
 		root.setHgap(20);
 		root.setVgap(20);
 		bord.setCenter(root);
+		bord.setBottom(back);
 		Scene scene = new Scene(bord, 500, 500);
 		primaryStage.setScene(scene);
 		primaryStage.show();
+		
+		//method to go back to menu
+		back.setOnAction(e->{
+			Menu menu = new Menu(username);
+			menu.start(new Stage());
+			primaryStage.close();
+		});
 		
 	}
 
