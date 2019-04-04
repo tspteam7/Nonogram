@@ -61,7 +61,7 @@ public class ViewPuzzlesGUI extends Application {
 				ArrayList<ArrayList<Integer>> colInfo = new ArrayList<>();
 				puzzleParser parseInfo = new puzzleParser();
 				parseInfo.getClues(rowInfo, colInfo, puzzle.getMaster());
-				NonogramGUI openGUI = new NonogramGUI();
+				NonogramGUI openGUI = new NonogramGUI(username);
 				openGUI.setInfo(puzzle.getMaster(), rowInfo, colInfo, puzzle.getWorking(), false);
 				openGUI.start(new Stage());
 				primaryStage.close();
