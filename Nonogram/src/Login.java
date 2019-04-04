@@ -51,7 +51,7 @@ public class Login extends Application {
 
 		//Title Text
 		Text title = new Text();
-		title.setText("Nonogram:\nA Logic Puzzle Game");								//What the title displays
+		title.setText("Nonogram:\nA Logic Puzzle Game");			//What the title displays
 		title.setFont(Font.font("System", FontWeight.BOLD, 30));	//Bolding the title and making it bigger
 		title.setStyle("-fx-fill: #551400");						//Assign the color of the title
 		title.setTextAlignment(TextAlignment.CENTER);
