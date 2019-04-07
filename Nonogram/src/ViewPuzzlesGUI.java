@@ -68,11 +68,11 @@ public class ViewPuzzlesGUI extends Application {
 			});
 			
 			
-			if(i % 4 != 0 || i == 0) {
+			if(i < 4) {
 				root.add(temp, i % 4, rowIndex);
 			}
 			else {
-				root.add(temp, 0, ++rowIndex);
+				root.add(temp, 0, rowIndex + 1);
 			}
 		}
 		

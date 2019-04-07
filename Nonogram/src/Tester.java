@@ -66,9 +66,11 @@ public class Tester {
 		assertTrue(tile.isXed());
 	}	
 	
+	
+	
 	@Test
 	public void testParse() {
-		List<ArrayList<Integer>> puzzle = new ArrayList<>();
+		ArrayList<ArrayList<Integer>> puzzle = new ArrayList<>();
 		
 		ArrayList<Integer> puzzleRow1 = new ArrayList<>();
 		ArrayList<Integer> puzzleRow2 = new ArrayList<>();
@@ -152,12 +154,12 @@ public class Tester {
 		testCol.add(col5);
 		
 		
-		List<ArrayList<Integer>> methodRow = new ArrayList<ArrayList<Integer>>();
-		List<ArrayList<Integer>> methodCol = new ArrayList<ArrayList<Integer>>();
+		ArrayList<ArrayList<Integer>> methodRow = new ArrayList<ArrayList<Integer>>();
+		ArrayList<ArrayList<Integer>> methodCol = new ArrayList<ArrayList<Integer>>();
 		
 		puzzleParser obj = new puzzleParser();
 		
-		obj.getClues(methodRow, methodCol, (List<ArrayList<Integer>>)puzzle);
+		obj.getClues(methodRow, methodCol, puzzle);
 		
 		for( int i = 0; i < methodRow.size(); i++ ) {
 			for( int j = 0; j < methodRow.get(i).size(); j++ ) {
@@ -174,6 +176,7 @@ public class Tester {
 		
 		
 	}
+	
 	
 	@Test
 	public void testRandomizer() {
@@ -233,7 +236,7 @@ public class Tester {
 	}
 	
 
-	
+	/*
 	@Test
 	public void puzzleImageLoaderTest1() {
 		PuzzleImageLoader test = new PuzzleImageLoader("C:\\Users\\Michael\\Pictures\\Nonogram Puzzles\\Puzzle1.png");
@@ -261,6 +264,7 @@ public class Tester {
 		
 		assertTrue(confirm.get(4).get(4).equals(1));
 	}
+	*/
 	
 	
 	

@@ -59,6 +59,11 @@ public class NonogramGUI extends Application {
     private ArrayList<ArrayList<Integer>> boardList = new ArrayList<ArrayList<Integer>>();
     
 	
+    /**
+     * Constructor that passes in a  username, and the username is only used if it is a player 
+     * 
+     * @param s is the username
+     */
     public NonogramGUI(String s) {
 		username = s;
 	}
@@ -127,7 +132,17 @@ public class NonogramGUI extends Application {
         stage.show();
 	}
     
+	/**
+	 * Set the info to be used when making the puzzles
+	 * 
+	 * @param m is the master board
+	 * @param r is the row info
+	 * @param c is the column info
+	 * @param wb is the working board if it exists
+	 * @param isTutorial is set true if this is to return to the tutorial screen
+	 */
     public void setInfo(ArrayList<ArrayList<Integer>> m, ArrayList<ArrayList<Integer>> r, ArrayList<ArrayList<Integer>> c, ArrayList<ArrayList<Integer>> wb, boolean isTutorial) {
+    	//Set the info
     	masterList = m;
     	rowInfoList = r;
     	colInfoList = c;
@@ -135,9 +150,11 @@ public class NonogramGUI extends Application {
     	masterRow = m.size();
     	masterCol = m.get(0).size();
     	
+    	//If tutorial is not true we want to set the working board
     	if (!isTutorial) {
     		boardList = wb;
     	}else {
+    		//else initailize the working board
     		for(int i = 0; i < masterRow ; i++) {
     			boardList.add(new ArrayList<Integer>());
     			for(int j = 0; j < masterCol ; j++) {
