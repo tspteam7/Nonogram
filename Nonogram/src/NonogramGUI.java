@@ -58,6 +58,8 @@ public class NonogramGUI extends Application {
     //The board being used on the game, default is all 0
     private ArrayList<ArrayList<Integer>> boardList = new ArrayList<ArrayList<Integer>>();
     
+    GridPane gridPane; 
+    
 	
     /**
      * Constructor that passes in a  username, and the username is only used if it is a player 
@@ -85,11 +87,11 @@ public class NonogramGUI extends Application {
         title.setTextAlignment(TextAlignment.CENTER);
         
         //Create the grid the game is played on
-        GridPane gridPane = buildPuzzle(masterCol,masterRow);
+        gridPane = buildPuzzle(masterCol,masterRow);
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setMaxHeight(500);
         gridPane.setMaxWidth(500);
-    	
+        
     	//Create a close button
         Button close = new Button("Close");
         close.setMinHeight(50);
@@ -131,7 +133,7 @@ public class NonogramGUI extends Application {
         stage.setScene(scene);
         stage.show();
 	}
-    
+
 	/**
 	 * Set the info to be used when making the puzzles
 	 * 
@@ -174,6 +176,15 @@ public class NonogramGUI extends Application {
      */
     private GridPane buildPuzzle(int i, int j) {
 		GridPane grid = new GridPane();
+		boolean isEmpty = true;
+		
+		for(int p = 0; p < boardList.size(); p++) {
+			for(int l = 0; l < boardList.get(l).size(); l++) {
+				if(boardList.get(p).get(l) != 0) {
+					isEmpty = false;
+				}
+			}
+		}
 		
 		//Black out area in the top left
 		TextField test = new TextField();
@@ -216,6 +227,23 @@ public class NonogramGUI extends Application {
 				b.setMinWidth(Math.min(500/i, 500/j));
 				b.setMinHeight(Math.min(500/i, 500/j));
 	    		b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#FEFEFE;");
+	    		
+	    		if(!isEmpty) {
+	    			switch(boardList.get(r-1).get(c-1)) {
+	    			case 0:
+	    				b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#FEFEFE;");
+	    				b.setText("");
+	    				break;
+	    			case 1:
+	    				b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#010101;");
+			    		b.setText("");
+			    		break;
+	    			case 2:
+	    				b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#FEFEFE;");
+	    				b.setText("X");
+	    				break;
+	    			}
+	    		}
 	    		
 	    		//get current coordinates
 				int row = r -1;
