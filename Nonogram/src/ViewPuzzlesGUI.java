@@ -47,8 +47,8 @@ public class ViewPuzzlesGUI extends Application {
 		}
 		
 		//put a box in the gridpane for each one
+		int rowIndex = 0;
 		for(int i = 0; i < numPuzzles; i++) {
-			int rowIndex = 0;
 			int tempInt[] = {i + 1};
 			Button temp = new Button();
 			temp.setText(String.valueOf(i + 1));
