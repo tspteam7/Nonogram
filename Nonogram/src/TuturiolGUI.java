@@ -28,6 +28,10 @@ public class TuturiolGUI extends Application{
 	private String username = "";
 	
 	@Override
+	/**
+	 * Starts the stage with primaryStage and displays the GUI.  It displays 7 tutorial
+	 * levels that are built in that everyone has access to.
+	 */
 	public void start(Stage primaryStage) throws Exception {
 		//Make the root to hold everything
         StackPane root = new StackPane();
@@ -114,6 +118,11 @@ public class TuturiolGUI extends Application{
         primaryStage.show();
 	}
 	
+	/**
+	 * A constructor that passes in the users username
+	 * 
+	 * @param s is the username
+	 */
 	public TuturiolGUI(String s) {
 		username = s;
 	}
