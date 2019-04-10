@@ -47,6 +47,7 @@ public class NonogramGUI extends Application {
     
     //Username
     private String username = "";
+    private int id = 0;
     
     //Arrays to store the data about how pixels lay out on the grid
     private ArrayList<ArrayList<Integer>> rowInfoList = new ArrayList<ArrayList<Integer>>();
@@ -66,8 +67,9 @@ public class NonogramGUI extends Application {
      * 
      * @param s is the username
      */
-    public NonogramGUI(String s) {
+    public NonogramGUI(String s, int i) {
 		username = s;
+		id = i;
 	}
 
 	@Override
@@ -316,6 +318,9 @@ public class NonogramGUI extends Application {
 		//If they are equal send a popup
 		if(equals) {
 			
+			//disable all buttons
+			disable();
+			
 			//create popup stage
 			Stage popupwindow=new Stage();
 		      
@@ -344,78 +349,12 @@ public class NonogramGUI extends Application {
 			popupwindow.showAndWait();
 		}
 	}
-	
-	
-	private void build(){
-		masterList.add(new ArrayList<Integer>());
-		masterList.add(new ArrayList<Integer>());
-		masterList.add(new ArrayList<Integer>());
-		masterList.add(new ArrayList<Integer>());
-		masterList.add(new ArrayList<Integer>());
+
+	private void disable() {
+		gridPane.getChildren();
 		
-		rowInfoList.add(new ArrayList<Integer>());
-		rowInfoList.add(new ArrayList<Integer>());
-		rowInfoList.add(new ArrayList<Integer>());
-		rowInfoList.add(new ArrayList<Integer>());
-		rowInfoList.add(new ArrayList<Integer>());
-		
-		colInfoList.add(new ArrayList<Integer>());
-		colInfoList.add(new ArrayList<Integer>());
-		colInfoList.add(new ArrayList<Integer>());
-		colInfoList.add(new ArrayList<Integer>());
-		colInfoList.add(new ArrayList<Integer>());
-		
-		masterList.get(0).add(0);
-		masterList.get(0).add(0);
-		masterList.get(0).add(1);
-		masterList.get(0).add(0);
-		masterList.get(0).add(0);
-		
-		masterList.get(1).add(0);
-		masterList.get(1).add(0);
-		masterList.get(1).add(0);
-		masterList.get(1).add(0);
-		masterList.get(1).add(0);
-		
-		masterList.get(2).add(1);
-		masterList.get(2).add(0);
-		masterList.get(2).add(1);
-		masterList.get(2).add(0);
-		masterList.get(2).add(1);
-		
-		masterList.get(3).add(0);
-		masterList.get(3).add(0);
-		masterList.get(3).add(0);
-		masterList.get(3).add(0);
-		masterList.get(3).add(0);
-		
-		masterList.get(4).add(0);
-		masterList.get(4).add(0);
-		masterList.get(4).add(1);
-		masterList.get(4).add(0);
-		masterList.get(4).add(0);
-		
-		rowInfoList.get(0).add(1);
-		
-		rowInfoList.get(2).add(1);
-		rowInfoList.get(2).add(1);
-		rowInfoList.get(2).add(1);
-		
-		rowInfoList.get(4).add(1);
-		
-		colInfoList.get(0).add(1);
-		
-		colInfoList.get(2).add(1);
-		colInfoList.get(2).add(1);
-		colInfoList.get(2).add(1);
-		
-		colInfoList.get(4).add(1);
-		
-		for(int i = 0; i < masterRow ; i++) {
-			boardList.add(new ArrayList<Integer>());
-			for(int j = 0; j < masterCol ; j++) {
-				boardList.get(i).add(0);
-			}
-		}
 	}
+	
+	
+	
 }

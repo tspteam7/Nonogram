@@ -76,7 +76,7 @@ public class TuturiolGUI extends Application{
     		    @Override public void handle(ActionEvent e) {
     		    	String address = "TutorialPics\\Puzzle" + temp + ".png";
     		    	
-    		    	NonogramGUI game = new NonogramGUI(username);
+    		    	NonogramGUI game = new NonogramGUI(username,0);
     		    	PuzzleImageLoader load = new PuzzleImageLoader(address);
     		    	puzzleParser parse = new puzzleParser();
     		    	
