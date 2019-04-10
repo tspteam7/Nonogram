@@ -56,6 +56,9 @@ public class Menu extends Application {
         Button tutorialBtn = new Button();			//The button that when clicked goes to the tutorial puzzles
         tutorialBtn.setText("Tutorial");			//The tutorial button text
         tutorialBtn.setPrefSize(125, 35);
+        Button flaggedBtn = new Button();			//The button that when clicked shows all the bad puzzles
+        flaggedBtn.setText("Flagged Puzzles");		//The flagged button text
+        flaggedBtn.setPrefSize(125, 35);
         Button logout = new Button();				//The button that when clicked logs the user out of the system
         logout.setText("Logout");					//The logout button text
         
@@ -76,6 +79,10 @@ public class Menu extends Application {
     	buttonBox.getChildren().add(selectBtn);		//Adds the buttons to the same box
     	buttonBox.getChildren().add(createBtn);
     	buttonBox.getChildren().add(tutorialBtn);
+    	
+    	if( username.equals("admin") ) {				//Isacc please implement this				
+    		buttonBox.getChildren().add(flaggedBtn);				
+    	}															
 
     	rightGrid.add(buttonBox, 0, 1);				//Adds the buttons to the rightGrid of the borderpane
     	rightGrid.addColumn(1, new Text("           "));	//Padding
