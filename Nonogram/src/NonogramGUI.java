@@ -111,6 +111,9 @@ public class NonogramGUI extends Application {
 					}
 		        	
 		    	}else {
+		    		Puzzle p = new Puzzle(id,username);
+		    		p.update(boardList, id, username);
+		    		
 		    		ViewPuzzlesGUI viewGUI = new ViewPuzzlesGUI(username);
 		        	try {
 						viewGUI.start(new Stage());
@@ -178,15 +181,6 @@ public class NonogramGUI extends Application {
      */
     private GridPane buildPuzzle(int i, int j) {
 		GridPane grid = new GridPane();
-		boolean isEmpty = true;
-		
-		for(int p = 0; p < boardList.size(); p++) {
-			for(int l = 0; l < boardList.get(l).size(); l++) {
-				if(boardList.get(p).get(l) != 0) {
-					isEmpty = false;
-				}
-			}
-		}
 		
 		//Black out area in the top left
 		TextField test = new TextField();
@@ -230,21 +224,19 @@ public class NonogramGUI extends Application {
 				b.setMinHeight(Math.min(500/i, 500/j));
 	    		b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#FEFEFE;");
 	    		
-	    		if(!isEmpty) {
-	    			switch(boardList.get(r-1).get(c-1)) {
-	    			case 0:
-	    				b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#FEFEFE;");
-	    				b.setText("");
-	    				break;
-	    			case 1:
-	    				b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#010101;");
-			    		b.setText("");
-			    		break;
-	    			case 2:
-	    				b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#FEFEFE;");
-	    				b.setText("X");
-	    				break;
-	    			}
+	    		switch(boardList.get(r-1).get(c-1)) {
+	    		case 0:
+	    			b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#FEFEFE;");
+	    			b.setText("");
+	    			break;
+	    		case 1:
+	    			b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#010101;");
+			    	b.setText("");
+			    	break;
+	    		case 2:
+	    			b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#FEFEFE;");
+	    			b.setText("X");
+	    			break;
 	    		}
 	    		
 	    		//get current coordinates
