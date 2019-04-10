@@ -124,13 +124,24 @@ public class NonogramGUI extends Application {
 		    }
 		});
         
+        //Create a flag button
+        Button flag = new Button("Flag");
+        flag.setMinHeight(50);
+        flag.setMinWidth(70);
+        flag.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		    	
+		    }
+		});
+        
         //Set the alignment of title and grid
         StackPane.setAlignment(title, Pos.TOP_CENTER);
         StackPane.setAlignment(gridPane, Pos.CENTER);
         StackPane.setAlignment(close, Pos.BOTTOM_LEFT);
+        StackPane.setAlignment(flag, Pos.BOTTOM_RIGHT);
         
         //Add the title and grid to the root, then change the color of root
-        root.getChildren().addAll(title,gridPane,close);
+        root.getChildren().addAll(title,gridPane,close,flag);
         root.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         
         //Create a new scene with the root and show it
