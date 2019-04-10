@@ -14,20 +14,14 @@
 /TuturiolGUI.class
 /parseTester.class
 /puzzleParser.class
-/.classpath
-/.gitignore
-/.project
-/Login$2.class
-/Menu$1.class
-/Menu$2.class
-/Menu.class
-/New Text Document.txt
+/LoginCSS.css
 /Puzzle.class
-/ViewPuzzlesGUI.class
-/PuzzleCreator.class
 /PuzzleCreator$1.class
 /PuzzleCreator$2.class
 /PuzzleCreator$3.class
 /PuzzleCreator$4.class
 /PuzzleCreator$5.class
 /PuzzleCreator$6.class
+/PuzzleCreator.class
+/ViewPuzzlesGUI.class
+/PuzzleToImageCreater.class
