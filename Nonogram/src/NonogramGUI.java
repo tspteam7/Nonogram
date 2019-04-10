@@ -2,6 +2,11 @@
  * Main class for gui of nonogram app
  */
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javafx.application.Application;
@@ -128,10 +133,51 @@ public class NonogramGUI extends Application {
         Button flag = new Button("Flag");
         flag.setMinHeight(50);
         flag.setMinWidth(70);
-        flag.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override public void handle(ActionEvent e) {
-		    	
-		    }
+        flag.setOnAction(e-> {
+        	Connection conn = null;
+        	PreparedStatement stmt = null;
+    		try {
+    			conn = DriverManager.getConnection(
+    					"jdbc:mysql://classdb.it.mtu.edu/sjogden",
+    					"sjogden",
+    					"password");
+    			stmt = conn.prepareStatement("UPDATE Puzzles SET flagged = true WHERE puzzle_id = ?");
+    			stmt.setInt(1, id);
+    			stmt.execute();
+    			//disable all buttons
+    			disable();
+    			
+    			//create popup stage
+    			Stage popupwindow=new Stage();
+    		      
+    			//Set style
+    			popupwindow.initModality(Modality.APPLICATION_MODAL);      
+    			      
+    			//Create the title
+    			Label label1= new Label("An admin will take a look at this \npuzzle and take the necessary action.\nThank you for your help!");
+    			      
+    			//Create a close button the close the popup
+    			Button button1= new Button("Close");   
+    			button1.setOnAction(eee -> popupwindow.close());
+    			     
+    			//Create layout format
+    			VBox layout= new VBox(10);    
+    			      
+    			//Add the label and button 
+    			layout.getChildren().addAll(label1, button1);
+    			layout.setAlignment(Pos.CENTER);
+    			      
+    			//Create a scene with the layout
+    			Scene scene1= new Scene(layout, 300, 250);
+    			      
+    			//Show the popup
+    			popupwindow.setScene(scene1);   
+    			popupwindow.showAndWait();
+    			
+    		} catch (SQLException ee) {
+    			System.out.println(ee.getMessage());
+    			ee.printStackTrace();
+    		} 
 		});
         
         //Set the alignment of title and grid
