@@ -47,6 +47,7 @@ public class NonogramGUI extends Application {
     
     //Username
     private String username = "";
+    private int id = 0;
     
     //Arrays to store the data about how pixels lay out on the grid
     private ArrayList<ArrayList<Integer>> rowInfoList = new ArrayList<ArrayList<Integer>>();
@@ -58,14 +59,17 @@ public class NonogramGUI extends Application {
     //The board being used on the game, default is all 0
     private ArrayList<ArrayList<Integer>> boardList = new ArrayList<ArrayList<Integer>>();
     
+    GridPane gridPane; 
+    
 	
     /**
      * Constructor that passes in a  username, and the username is only used if it is a player 
      * 
      * @param s is the username
      */
-    public NonogramGUI(String s) {
+    public NonogramGUI(String s, int i) {
 		username = s;
+		id = i;
 	}
 
 	@Override
@@ -85,11 +89,11 @@ public class NonogramGUI extends Application {
         title.setTextAlignment(TextAlignment.CENTER);
         
         //Create the grid the game is played on
-        GridPane gridPane = buildPuzzle(masterCol,masterRow);
+        gridPane = buildPuzzle(masterCol,masterRow);
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setMaxHeight(500);
         gridPane.setMaxWidth(500);
-    	
+        
     	//Create a close button
         Button close = new Button("Close");
         close.setMinHeight(50);
@@ -131,7 +135,7 @@ public class NonogramGUI extends Application {
         stage.setScene(scene);
         stage.show();
 	}
-    
+
 	/**
 	 * Set the info to be used when making the puzzles
 	 * 
@@ -174,6 +178,15 @@ public class NonogramGUI extends Application {
      */
     private GridPane buildPuzzle(int i, int j) {
 		GridPane grid = new GridPane();
+		boolean isEmpty = true;
+		
+		for(int p = 0; p < boardList.size(); p++) {
+			for(int l = 0; l < boardList.get(l).size(); l++) {
+				if(boardList.get(p).get(l) != 0) {
+					isEmpty = false;
+				}
+			}
+		}
 		
 		//Black out area in the top left
 		TextField test = new TextField();
@@ -216,6 +229,23 @@ public class NonogramGUI extends Application {
 				b.setMinWidth(Math.min(500/i, 500/j));
 				b.setMinHeight(Math.min(500/i, 500/j));
 	    		b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#FEFEFE;");
+	    		
+	    		if(!isEmpty) {
+	    			switch(boardList.get(r-1).get(c-1)) {
+	    			case 0:
+	    				b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#FEFEFE;");
+	    				b.setText("");
+	    				break;
+	    			case 1:
+	    				b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#010101;");
+			    		b.setText("");
+			    		break;
+	    			case 2:
+	    				b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#FEFEFE;");
+	    				b.setText("X");
+	    				break;
+	    			}
+	    		}
 	    		
 	    		//get current coordinates
 				int row = r -1;
@@ -288,6 +318,9 @@ public class NonogramGUI extends Application {
 		//If they are equal send a popup
 		if(equals) {
 			
+			//disable all buttons
+			disable();
+			
 			//create popup stage
 			Stage popupwindow=new Stage();
 		      
@@ -316,78 +349,12 @@ public class NonogramGUI extends Application {
 			popupwindow.showAndWait();
 		}
 	}
-	
-	
-	private void build(){
-		masterList.add(new ArrayList<Integer>());
-		masterList.add(new ArrayList<Integer>());
-		masterList.add(new ArrayList<Integer>());
-		masterList.add(new ArrayList<Integer>());
-		masterList.add(new ArrayList<Integer>());
+
+	private void disable() {
+		gridPane.getChildren();
 		
-		rowInfoList.add(new ArrayList<Integer>());
-		rowInfoList.add(new ArrayList<Integer>());
-		rowInfoList.add(new ArrayList<Integer>());
-		rowInfoList.add(new ArrayList<Integer>());
-		rowInfoList.add(new ArrayList<Integer>());
-		
-		colInfoList.add(new ArrayList<Integer>());
-		colInfoList.add(new ArrayList<Integer>());
-		colInfoList.add(new ArrayList<Integer>());
-		colInfoList.add(new ArrayList<Integer>());
-		colInfoList.add(new ArrayList<Integer>());
-		
-		masterList.get(0).add(0);
-		masterList.get(0).add(0);
-		masterList.get(0).add(1);
-		masterList.get(0).add(0);
-		masterList.get(0).add(0);
-		
-		masterList.get(1).add(0);
-		masterList.get(1).add(0);
-		masterList.get(1).add(0);
-		masterList.get(1).add(0);
-		masterList.get(1).add(0);
-		
-		masterList.get(2).add(1);
-		masterList.get(2).add(0);
-		masterList.get(2).add(1);
-		masterList.get(2).add(0);
-		masterList.get(2).add(1);
-		
-		masterList.get(3).add(0);
-		masterList.get(3).add(0);
-		masterList.get(3).add(0);
-		masterList.get(3).add(0);
-		masterList.get(3).add(0);
-		
-		masterList.get(4).add(0);
-		masterList.get(4).add(0);
-		masterList.get(4).add(1);
-		masterList.get(4).add(0);
-		masterList.get(4).add(0);
-		
-		rowInfoList.get(0).add(1);
-		
-		rowInfoList.get(2).add(1);
-		rowInfoList.get(2).add(1);
-		rowInfoList.get(2).add(1);
-		
-		rowInfoList.get(4).add(1);
-		
-		colInfoList.get(0).add(1);
-		
-		colInfoList.get(2).add(1);
-		colInfoList.get(2).add(1);
-		colInfoList.get(2).add(1);
-		
-		colInfoList.get(4).add(1);
-		
-		for(int i = 0; i < masterRow ; i++) {
-			boardList.add(new ArrayList<Integer>());
-			for(int j = 0; j < masterCol ; j++) {
-				boardList.get(i).add(0);
-			}
-		}
 	}
+	
+	
+	
 }

@@ -74,9 +74,9 @@ public class TuturiolGUI extends Application{
             b.setMinWidth(70);
             b.setOnAction(new EventHandler<ActionEvent>() {
     		    @Override public void handle(ActionEvent e) {
-    		    	String address = "C:\\Users\\Frank\\Desktop\\tsp19\\Nonogram\\TutorialPics\\Puzzle" + temp + ".png";
+    		    	String address = "TutorialPics\\Puzzle" + temp + ".png";
     		    	
-    		    	NonogramGUI game = new NonogramGUI(username);
+    		    	NonogramGUI game = new NonogramGUI(username,0);
     		    	PuzzleImageLoader load = new PuzzleImageLoader(address);
     		    	puzzleParser parse = new puzzleParser();
     		    	
