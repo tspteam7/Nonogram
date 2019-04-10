@@ -209,7 +209,7 @@ public class NonogramGUI extends Application {
 			}
 			Label label = new Label(t);
 			label.setTextFill(Color.WHITE);
-			label.autosize();
+			label.setMinHeight(500/j + t.length()*4);
 			grid.add(label, c, 0);
 			GridPane.setHalignment(label, HPos.CENTER);
 		}
@@ -223,7 +223,7 @@ public class NonogramGUI extends Application {
 			}
 			Label label = new Label(t);
 			label.setTextFill(Color.WHITE);
-			label.autosize();
+			label.setMinWidth(500/i + t.length()*2);
 			grid.add(label, 0, r);
 			GridPane.setHalignment(label, HPos.CENTER);
 			
