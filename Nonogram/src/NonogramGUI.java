@@ -48,7 +48,7 @@ public class NonogramGUI extends Application {
     private int masterCol = 0;
     
     //If this puzzle is from tutorial
-    boolean fromTutorial = false;
+    private int whereTo = 0;
     
     //Username
     private String username = "";
@@ -107,15 +107,17 @@ public class NonogramGUI extends Application {
 		    @Override public void handle(ActionEvent e) {
 		    	Stage stage = (Stage) close.getScene().getWindow();
 		    	stage.close();
-		    	if(fromTutorial) {
+		    	switch(whereTo) {
+		    	case 0:
 		        	TuturiolGUI tutgui = new TuturiolGUI(username);
 		        	try {
 						tutgui.start(new Stage());
 					} catch (Exception a) {
 						a.printStackTrace();
 					}
+		        	break;
 		        	
-		    	}else {
+		    	case 1:
 		    		Puzzle p = new Puzzle(id,username);
 		    		p.update(boardList, id, username);
 		    		
@@ -125,8 +127,13 @@ public class NonogramGUI extends Application {
 					} catch (Exception a) {
 						a.printStackTrace();
 					}
+		    	case 2:
+		    		
+		    		break;
+		    		
 		    	}
 		    }
+		    
 		});
         
         //Create a flag button
@@ -205,17 +212,17 @@ public class NonogramGUI extends Application {
 	 * @param wb is the working board if it exists
 	 * @param isTutorial is set true if this is to return to the tutorial screen
 	 */
-    public void setInfo(ArrayList<ArrayList<Integer>> m, ArrayList<ArrayList<Integer>> r, ArrayList<ArrayList<Integer>> c, ArrayList<ArrayList<Integer>> wb, boolean isTutorial) {
+    public void setInfo(ArrayList<ArrayList<Integer>> m, ArrayList<ArrayList<Integer>> r, ArrayList<ArrayList<Integer>> c, ArrayList<ArrayList<Integer>> wb, int isTutorial) {
     	//Set the info
     	masterList = m;
     	rowInfoList = r;
     	colInfoList = c;
-    	fromTutorial = isTutorial;
+    	whereTo = isTutorial;
     	masterRow = m.size();
     	masterCol = m.get(0).size();
     	
     	//If tutorial is not true we want to set the working board
-    	if (!isTutorial) {
+    	if (whereTo == 1) {
     		boardList = wb;
     	}else {
     		//else initailize the working board

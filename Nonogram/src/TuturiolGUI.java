@@ -94,7 +94,7 @@ public class TuturiolGUI extends Application{
     		    	
     		    	parse.getClues(ri, ci, master);
     		    	
-    		    	game.setInfo(master,ri,ci,wb,true);
+    		    	game.setInfo(master,ri,ci,wb,0);
     		    	
     		    	game.start(new Stage());
     		    	primaryStage.close();
