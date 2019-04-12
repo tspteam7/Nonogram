@@ -1,3 +1,9 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -80,9 +86,24 @@ public class Menu extends Application {
     	buttonBox.getChildren().add(createBtn);
     	buttonBox.getChildren().add(tutorialBtn);
     	
-    	if( username.equals("admin") ) {				//Isacc please implement this				
-    		buttonBox.getChildren().add(flaggedBtn);				
-    	}															
+    	Connection conn = null;
+    	PreparedStatement stmt = null;
+		ResultSet rs = null;
+    	try {
+			conn = DriverManager.getConnection(					
+					"jdbc:mysql://classdb.it.mtu.edu/sjogden",
+					"sjogden",
+					"password");
+			stmt = conn.prepareStatement("SELECT admin FROM NonogramUser WHERE username = ?");
+			stmt.setString(1, username);
+			rs = stmt.executeQuery();
+			rs.first();
+			if(rs.getBoolean("admin")) {
+				buttonBox.getChildren().add(flaggedBtn);
+			}
+    	} catch(SQLException e) {
+    		e.printStackTrace();
+    	}
 
     	rightGrid.add(buttonBox, 0, 1);				//Adds the buttons to the rightGrid of the borderpane
     	rightGrid.addColumn(1, new Text("           "));	//Padding
@@ -154,6 +175,11 @@ public class Menu extends Application {
       	
         });
         
+        flaggedBtn.setOnAction(e->{
+        	FlaggedPuzzlesGUI flagged = new FlaggedPuzzlesGUI();
+        	flagged.start(new Stage());
+        	primaryStage.close();
+        });
         
     }
 }

@@ -122,14 +122,19 @@ public class NonogramGUI extends Application {
 		    		Puzzle p = new Puzzle(id,username);
 		    		p.update(boardList, id, username);
 		    		
+		    		/*ViewPuzzlesGUI viewGUI = new ViewPuzzlesGUI(username);
+		        	try {
+						viewGUI.start(new Stage());
+					} catch (Exception a) {
+						a.printStackTrace();
+					}*/
+		    	case 2:
 		    		ViewPuzzlesGUI viewGUI = new ViewPuzzlesGUI(username);
 		        	try {
 						viewGUI.start(new Stage());
 					} catch (Exception a) {
 						a.printStackTrace();
 					}
-		    	case 2:
-		    		
 		    		break;
 		    		
 		    	}
@@ -409,6 +414,17 @@ public class NonogramGUI extends Application {
 	}
 
 	private void disable() {
+		Button b;
+		for(Node n : gridPane.getChildren()) {
+			try{
+				b = (Button)n;
+				if (b != null)
+					b.setOnAction(e-> {});
+			} catch (ClassCastException ex){
+				
+			}
+			
+		}
 		
 		
 	}	
