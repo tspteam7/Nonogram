@@ -48,10 +48,30 @@ public class ViewPuzzlesGUI extends Application {
 		
 		//put a box in the gridpane for each one
 		int rowIndex = 0;
-		for(int i = 0; i < numPuzzles; i++) {
-			int tempInt[] = {i + 1};
+		for (int i = 0; i < 4; i++) {
+			final int i_ = i;
 			Button temp = new Button();
-			temp.setText(String.valueOf(i + 1));
+			temp.setText("Random " + 5*(i+1) + "x" + 5*(i+1));
+			temp.setOnAction(e -> {
+				NonogramGUI game = new NonogramGUI(username,0);
+		    	Randomizer rand = new Randomizer();
+		    	puzzleParser parse = new puzzleParser();
+		    	ArrayList<ArrayList<Integer>> master = rand.randomizer(5*(i_+1), 5*(i_+1));
+				ArrayList<ArrayList<Integer>> rowInfo = new ArrayList<>();
+				ArrayList<ArrayList<Integer>> colInfo = new ArrayList<>();
+				parse.getClues(rowInfo, colInfo, master);
+				game.setInfo(master, rowInfo, colInfo, null, 2);
+				game.start(new Stage());
+				primaryStage.close();
+			});
+			root.add(temp, i % 4, rowIndex);
+		}
+		rowIndex++;
+		
+		for(int i = 4; i < numPuzzles+4; i++) {
+			int tempInt[] = {i - 3};
+			Button temp = new Button();
+			temp.setText(String.valueOf(i - 3));
 			
 			
 			//create the action even for each button to open up NonogramGUI
