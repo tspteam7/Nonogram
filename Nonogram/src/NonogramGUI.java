@@ -15,6 +15,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -229,6 +230,7 @@ public class NonogramGUI extends Application {
     	//If tutorial is not true we want to set the working board
     	if (whereTo == 1) {
     		boardList = wb;
+    		compare();
     	}else {
     		//else initailize the working board
     		for(int i = 0; i < masterRow ; i++) {
@@ -412,10 +414,20 @@ public class NonogramGUI extends Application {
 	}
 
 	private void disable() {
-		gridPane.getChildren();
+		Button b;
+		for(Node n : gridPane.getChildren()) {
+			try{
+				b = (Button)n;
+				if (b != null)
+					b.setOnAction(e-> {});
+			} catch (ClassCastException ex){
+				
+			}
+			
+		}
 		
-	}
-	
+		
+	}	
 	
 	
 }
