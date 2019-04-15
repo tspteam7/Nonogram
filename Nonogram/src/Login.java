@@ -12,6 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -57,7 +58,7 @@ public class Login extends Application {
 		Text invalidLogin = new Text();								
 		invalidLogin.setText("Invalid login information");			//What invalidLogin displays initially
 		invalidLogin.setStyle("-fx-fill: #1c1207");							//Change the color of invalidLogin to red
-		invalidLogin.setFont(Font.font("System", 18));							//Font size
+		invalidLogin.setFont(Font.font("System", FontWeight.BOLD, 18));							//Font size
 		invalidLogin.setVisible(false);								//Only display when there is an error
 		
 		//Adding the elements together
@@ -82,7 +83,6 @@ public class Login extends Application {
 		stack.setTop(top);							//top is set to the top borderpane
 		stack.setCenter(center);					//center is set to the center borderpane
 		
-		//Setting the scene and stage
 		Scene scene = new Scene(stack, 600, 400 );	//scene is created using the borderpane
 		scene.getStylesheets().add("LoginCSS.css");	//scene uses "LoginCSS.css" to color the display
 		
@@ -202,10 +202,6 @@ public class Login extends Application {
         				primaryStage.show();
         			}
         		} catch (SQLException e) {
-        			invalidLogin.setText("Username and password must be less than 20 characters");
-        			invalidLogin.setVisible(true);
-        			password.clear();
-        			username.clear();
         			System.out.println(e.getMessage());
         			e.printStackTrace();
         		}
