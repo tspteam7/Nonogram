@@ -153,7 +153,7 @@ public class Puzzle {
 			stmt.setString(1, dataToString(puzzle));
 			stmt.setInt(2, id);
 			stmt.setString(3, username);
-			rs = stmt.executeQuery();
+			stmt.execute();
 			
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
