@@ -1,14 +1,11 @@
 import java.util.ArrayList;
 
-import javax.swing.JFileChooser;
-
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -23,11 +20,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import java.awt.event.ActionListener;
 
 public class PuzzleCreator extends Application{
 
@@ -192,19 +186,6 @@ public class PuzzleCreator extends Application{
 		    }
 		});
         
-        
-       //Create a Upload Image button
-         Button browse = new Button("Browse");
-         browse.setMinHeight(50);
-         browse.setMinWidth(70);
-         browse.setOnAction(new EventHandler<ActionEvent>() {
-        	 @Override public void handle(ActionEvent e) {
-        		BrowseForImage(e); 
-        	 } 
-        	 
-         });
-        
-        
         //Set the alignment of title and grid
         StackPane.setAlignment(title, Pos.TOP_CENTER);
         StackPane.setAlignment(gridPane, Pos.CENTER);
@@ -213,15 +194,9 @@ public class PuzzleCreator extends Application{
         StackPane.setAlignment(close, Pos.BOTTOM_LEFT);
         StackPane.setAlignment(colorPicker, Pos.CENTER_RIGHT);
         StackPane.setAlignment(curColorBox, Pos.TOP_RIGHT);
-        StackPane.setAlignment(browse, Pos.BOTTOM_CENTER);
         //Add the title and grid to the root, then change the color of root
-        root.getChildren().addAll(title,dimensionsBox,gridPane,close,create,colorPicker,curColorBox, browse);
+        root.getChildren().addAll(title,dimensionsBox,gridPane,close,create,colorPicker,curColorBox);
         root.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
-        
-        
-        
-        
-        
         
         //Create a new scene with the root and show it
         Scene scene = new Scene(root, 1000, 1000);
@@ -325,22 +300,6 @@ public class PuzzleCreator extends Application{
 		popupwindow.setScene(scene1);   
 		popupwindow.showAndWait();
 	}
-	
-	
-	
-	public void BrowseForImage(ActionEvent e) {
-		JFileChooser fileChooser = new JFileChooser();
-		
-		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		
-		//int rVal = fileChooser.showOpenDialog(null);
-		//if(rVal == JFileChooser.APPROVE_OPTION) {
-			//txtPath.setText(fileChooser.getSelectedFile().toString());
-		//}
-	}
-	
-	
-	
 	
 	public static void main(String[] args) {
         launch(args);
