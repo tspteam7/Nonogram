@@ -204,6 +204,8 @@ public class NonogramGUI extends Application {
         Scene scene = new Scene(root, 1000, 1000);
         stage.setScene(scene);
         stage.show();
+        
+        compare();
 	}
 
 	/**
@@ -227,7 +229,6 @@ public class NonogramGUI extends Application {
     	//If tutorial is not true we want to set the working board
     	if (whereTo == 1) {
     		boardList = wb;
-    		compare();
     	}else {
     		//else initailize the working board
     		for(int i = 0; i < masterRow ; i++) {
