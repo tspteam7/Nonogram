@@ -1,6 +1,3 @@
-/**
- * Main class for gui of nonogram app
- */
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -90,7 +87,7 @@ public class NonogramGUI extends Application {
         //Title
         Text title = new Text();
         title.setText("Nonogram");
-        title.setFill(Color.rgb(28, 191, 107));
+        title.setFill(Color.rgb(0, 0, 0));
         title.setFont(Font.font ("Verdana", 100));
         title.setTextAlignment(TextAlignment.CENTER);
         
@@ -201,7 +198,7 @@ public class NonogramGUI extends Application {
         
         //Add the title and grid to the root, then change the color of root
         root.getChildren().addAll(title,gridPane,close,flag);
-        root.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+        root.setBackground(new Background(new BackgroundFill(Color.ORANGE, CornerRadii.EMPTY, Insets.EMPTY)));
         
         //Create a new scene with the root and show it
         Scene scene = new Scene(root, 1000, 1000);
@@ -256,9 +253,9 @@ public class NonogramGUI extends Application {
 		//Black out area in the top left
 		TextField test = new TextField();
 		test.setDisable(true);
-		test.setMinWidth(500/i);
-		test.setMinHeight(500/j);
-		test.setStyle("-fx-border-color:#010101;-fx-background-color:#010101;");
+		test.setMinWidth(500/i + i*3);
+		test.setMinHeight(500/j + j*4);
+		test.setStyle("-fx-border-color:#010101;-fx-background-color:#fec637;");
 		grid.add(test, 0, 0);
 		
 		//Create the hint boxes for each Column at the top
@@ -268,8 +265,11 @@ public class NonogramGUI extends Application {
 				t = t + colInfoList.get(c-1).get(p) + "\n";
 			}
 			Label label = new Label(t);
-			label.setTextFill(Color.WHITE);
-			label.setMinHeight(500/j + t.length()*4);
+			label.setTextFill(Color.BLACK);
+			label.setStyle("-fx-border-color:black; -fx-background-color: white;");
+			label.setMinHeight(500/j + j*4);
+			label.setMinWidth(500/i);
+			label.setAlignment(Pos.CENTER);
 			grid.add(label, c, 0);
 			GridPane.setHalignment(label, HPos.CENTER);
 		}
@@ -282,8 +282,10 @@ public class NonogramGUI extends Application {
 				t = t + rowInfoList.get(r-1).get(p) + " ";
 			}
 			Label label = new Label(t);
-			label.setTextFill(Color.WHITE);
-			label.setMinWidth(500/i + t.length()*2);
+			label.setTextFill(Color.BLACK);
+			label.setStyle("-fx-border-color:black; -fx-background-color: white;");
+			label.setMinWidth(500/i + i*3);
+			label.setMinHeight(500/j);
 			grid.add(label, 0, r);
 			GridPane.setHalignment(label, HPos.CENTER);
 			
