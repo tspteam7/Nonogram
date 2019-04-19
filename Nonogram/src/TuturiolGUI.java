@@ -66,6 +66,48 @@ public class TuturiolGUI extends Application{
 		    }
 		});
         
+    	//Create a close button
+        Button hint = new Button("How to Play");
+        hint.setMinHeight(50);
+        hint.setMinWidth(70);
+        hint.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		    	//create popup stage
+				Stage popupwindow=new Stage();
+			      
+				//Set style
+				popupwindow.initModality(Modality.APPLICATION_MODAL);      
+				      
+				//Create the title
+				Label label1= new Label("Welcome to the game! To play you must fill in the grid in a predesigned \n"
+										+ "pattern.  To do this you have hints on the side.  These hints tell you how many \n"
+										+ "are filled in on that row or column(the sum of the numbers), and if there are \n"
+										+ "multiple filled in blocks in a row(1 means 1 in a row, 2 means 2 in a row, etc.).  \n"
+										+ "The blocks have three states: filled in, empty, or X'd.  The X'd state alows you to \n"
+										+ "mark which blocks you have determined to be empty.  Once the puzzle is completed you \n"
+										+ "recieve a notification and the puzzle will lock.  In the Play Puzzle section your \n"
+										+ "progress will be saved, and you can reset your puzzle from the menu.  Good Luck!");
+				      
+				//Create a close button the close the popup
+				Button button1= new Button("Close");   
+				button1.setOnAction(a -> popupwindow.close());
+				     
+				//Create layout format
+				VBox layout= new VBox(10);    
+				      
+				//Add the label and button 
+				layout.getChildren().addAll(label1, button1);
+				layout.setAlignment(Pos.CENTER);
+				      
+				//Create a scene with the layout
+				Scene scene1= new Scene(layout, 500, 200);
+				      
+				//Show the popup
+				popupwindow.setScene(scene1);   
+				popupwindow.showAndWait();
+		    }
+		});
+        
         for(int i = 1; i <= 7 ; i++) {
         	int temp = i;
         	
@@ -107,9 +149,10 @@ public class TuturiolGUI extends Application{
         StackPane.setAlignment(title, Pos.TOP_CENTER);
         StackPane.setAlignment(gridPane, Pos.CENTER);
         StackPane.setAlignment(close, Pos.BOTTOM_LEFT);
+        StackPane.setAlignment(hint, Pos.CENTER_LEFT);
         
         //Add the title and grid to the root, then change the color of root
-        root.getChildren().addAll(title,gridPane,close);
+        root.getChildren().addAll(title,gridPane,close,hint);
         root.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         
         //Create a new scene with the root and show it
