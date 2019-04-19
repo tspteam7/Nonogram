@@ -24,8 +24,36 @@ public class ViewPuzzlesGUI extends Application {
 	
 	@Override
 	public void start( Stage primaryStage) {
+		
+		//Panes
+		BorderPane border = new BorderPane();
 		GridPane root = new GridPane();
-		BorderPane bord = new BorderPane();
+		
+		//Sets the spacing between elements
+		root.setAlignment(Pos.CENTER);
+		root.setHgap(20);
+		root.setVgap(20);
+		
+		//Buttons
+		Button back = new Button();
+		back.setText("Back to Menu");
+		
+		//Text
+		
+		//Adding the elements together
+		border.setCenter(root);
+		border.setBottom(back);
+		
+		//Setting the scene and stage
+		Scene scene = new Scene(border, 600, 400);
+		scene.getStylesheets().add("LoginCSS.css");
+		
+		primaryStage.setScene(scene);
+		primaryStage.setTitle("Nonogram");
+		primaryStage.show();
+		
+		
+		
 		Connection conn = null;
     	PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -61,8 +89,7 @@ public class ViewPuzzlesGUI extends Application {
 				ArrayList<ArrayList<Integer>> colInfo = new ArrayList<>();
 				parse.getClues(rowInfo, colInfo, master);
 				game.setInfo(master, rowInfo, colInfo, null, 2);
-				game.start(new Stage());
-				primaryStage.close();
+				game.start(primaryStage);
 			});
 			root.add(temp, i % 4, rowIndex);
 		}
@@ -83,8 +110,7 @@ public class ViewPuzzlesGUI extends Application {
 				parseInfo.getClues(rowInfo, colInfo, puzzle.getMaster());
 				NonogramGUI openGUI = new NonogramGUI(username,tempInt[0]);
 				openGUI.setInfo(puzzle.getMaster(), rowInfo, colInfo, puzzle.getWorking(), 1);
-				openGUI.start(new Stage());
-				primaryStage.close();
+				openGUI.start(primaryStage);
 			});
 			
 			
@@ -96,22 +122,12 @@ public class ViewPuzzlesGUI extends Application {
 			}
 		}
 		
-		Button back = new Button();
-		back.setText("Back to Menu");
-		root.setAlignment(Pos.CENTER);
-		root.setHgap(20);
-		root.setVgap(20);
-		bord.setCenter(root);
-		bord.setBottom(back);
-		Scene scene = new Scene(bord, 500, 500);
-		primaryStage.setScene(scene);
-		primaryStage.show();
+		
 		
 		//method to go back to menu
 		back.setOnAction(e->{
 			Menu menu = new Menu(username);
-			menu.start(new Stage());
-			primaryStage.close();
+			menu.start(primaryStage);
 		});
 		
 	}
