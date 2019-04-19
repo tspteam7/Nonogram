@@ -251,14 +251,6 @@ public class NonogramGUI extends Application {
     private GridPane buildPuzzle(int i, int j) {
 		GridPane grid = new GridPane();
 		
-		//Black out area in the top left
-		TextField test = new TextField();
-		test.setDisable(true);
-		test.setMinWidth(500/i + i*3);
-		test.setMinHeight(500/j + j*4);
-		test.setStyle("-fx-border-color:#010101;-fx-background-color:#fec637;");
-		grid.add(test, 0, 0);
-		
 		//Create the hint boxes for each Column at the top
 		for (int c = 1 ; c < i+1; c++) {
 			String t = "";
@@ -269,7 +261,7 @@ public class NonogramGUI extends Application {
 			label.setTextFill(Color.BLACK);
 			label.setStyle("-fx-border-color:black; -fx-background-color: white;");
 			label.setMinHeight(500/j + j*4);
-			label.setMinWidth(500/i);
+			label.setMinWidth(Math.min(500/i, 500/j));
 			label.setAlignment(Pos.CENTER);
 			grid.add(label, c, 0);
 			GridPane.setHalignment(label, HPos.CENTER);
@@ -286,7 +278,7 @@ public class NonogramGUI extends Application {
 			label.setTextFill(Color.BLACK);
 			label.setStyle("-fx-border-color:black; -fx-background-color: white;");
 			label.setMinWidth(500/i + i*3);
-			label.setMinHeight(500/j);
+			label.setMinHeight(Math.min(500/i, 500/j));
 			grid.add(label, 0, r);
 			GridPane.setHalignment(label, HPos.CENTER);
 			
