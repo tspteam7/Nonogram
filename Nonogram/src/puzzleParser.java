@@ -31,30 +31,64 @@ public class puzzleParser {
 	 */
 
 	public void getClues(ArrayList<ArrayList<Integer>> row, ArrayList<ArrayList<Integer>> col, ArrayList<ArrayList<Integer>> puzzle ) {
-		int counter = 0;
+		int counter = 0, curNum = 0;
 		ArrayList<Integer> temp = new ArrayList<>();
 		
 		// Iterates through the rows 
 		for( int i = 0; i < puzzle.size(); i++ ) {
 			for( int j = 0; j < puzzle.get(i).size(); j++ ) {
-				if( puzzle.get(i).get(j) > 0 ) {
+				if( puzzle.get(i).get(j) > 0 && puzzle.get(i).get(j) == curNum) {
 					counter++;
 				} else { // If the tile is not filled...
 					if( counter != 0 ) { // If the tile is not filled and there has been a filled tile previously
 						temp.add(counter);
-						counter = 0;
+						temp.add(curNum);
+						curNum = puzzle.get(i).get(j);
+						if (curNum > 0)
+							counter = 1;
+						else
+							counter = 0;
 					}
 				}
 			}
 			if( counter != 0 ) {
 				temp.add(counter);
+				temp.add(curNum);
 			}
 			row.add(temp);
 			temp = new ArrayList<>();
 			counter = 0; // Resets the counter to be used again
+			curNum = 0;
 		}
-		
-		// Iterates through the columns
+
+		// Iterates through the columns 
+				for( int j = 0; j < puzzle.size(); j++ ) {
+					for( int i = 0; i < puzzle.get(j).size(); i++ ) {
+						if( puzzle.get(i).get(j) > 0 && puzzle.get(i).get(j) == curNum) {
+							counter++;
+						} else { // If the tile is not filled...
+							if( counter != 0 ) { // If the tile is not filled and there has been a filled tile previously
+								temp.add(counter);
+								temp.add(curNum);
+								curNum = puzzle.get(i).get(j);
+								if (curNum > 0)
+									counter = 1;
+								else
+									counter = 0;
+							}
+						}
+					}
+					if( counter != 0 ) {
+						temp.add(counter);
+						temp.add(curNum);
+					}
+					row.add(temp);
+					temp = new ArrayList<>();
+					counter = 0; // Resets the counter to be used again
+					curNum = 0;
+				}
+				
+		/*// Iterates through the columns
 		int j = 0;
 		while( j < puzzle.get(0).size() ) {
 			for( int i = 0; i < puzzle.size(); i++ ) {
@@ -74,6 +108,6 @@ public class puzzleParser {
 			col.add(temp);
 			temp = new ArrayList<>();
 			counter = 0; // resets the counter to start again
-		}
+		}*/
 	}
 }
