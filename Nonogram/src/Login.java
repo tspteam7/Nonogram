@@ -119,8 +119,7 @@ public class Login extends Application {
         				if(password.getText().equals(rs.getString("password"))) {
         					//NonogramGUI n = new NonogramGUI();
         					Menu n = new Menu(username.getText()); // Testing opening the menu
-        					n.start(new Stage());
-        					primaryStage.close();
+        					n.start(primaryStage);
         				} else {
         					invalidLogin.setText("Invalid login information");
         					invalidLogin.setVisible(true);
@@ -158,8 +157,7 @@ public class Login extends Application {
         				rs.first();
         				if( password.getText().equals(rs.getString("password"))) {
         				  Menu n = new Menu(username.getText());
-        				  n.start(new Stage());
-        				  primaryStage.close();
+        				  n.start(primaryStage);
         				} else {
         					invalidLogin.setText("Invalid login information");
         					invalidLogin.setVisible(true);
@@ -199,9 +197,8 @@ public class Login extends Application {
         				stmt.setString(2, password.getText());
         				stmt.setBoolean(3, false);
         				stmt.execute();
-        				
-        				primaryStage.close();
-        				primaryStage.show();
+        				invalidLogin.setText("Account " + username.getText() + " created");
+        				invalidLogin.setVisible(true);
         			}
         		} catch (SQLException e) {
         			invalidLogin.setText("Username and password must be less than 20 characters");
