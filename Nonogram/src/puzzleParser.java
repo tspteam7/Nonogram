@@ -32,8 +32,77 @@ public class puzzleParser {
 
 	public void getClues(ArrayList<ArrayList<Integer>> row, ArrayList<ArrayList<Integer>> col, ArrayList<ArrayList<Integer>> puzzle ) {
 		int counter = 0, curNum = 0;
-		ArrayList<Integer> temp = new ArrayList<>();
+		ArrayList<Integer> temp = new ArrayList<Integer>();
 		
+		for (int i = 0; i < puzzle.size(); i++) {
+			for (int j = 0; j < puzzle.get(i).size(); j++) {
+				int number = puzzle.get(i).get(j);
+				if (number > 0) {
+					if (number == curNum)
+						counter++;
+					else {
+						if (counter > 0) {
+							temp.add(counter);
+							temp.add(curNum);
+						}
+						curNum = number;
+						counter = 1;
+					}
+				}
+				else {
+					if (counter > 0) {
+						temp.add(counter);
+						temp.add(curNum);
+					}
+					counter = 0;
+				}
+			}
+			if (counter > 0) {
+				temp.add(counter);
+				temp.add(curNum);
+			}
+			row.add(temp);
+			temp = new ArrayList<Integer>();
+			counter = 0;
+			curNum = 0;
+		}
+		
+		for (int i = 0; i < puzzle.size(); i++) {
+			for (int j = 0; j < puzzle.get(i).size(); j++) {
+				int number = puzzle.get(j).get(i);
+				if (number > 0) {
+					if (number == curNum)
+						counter++;
+					else {
+						if (counter > 0) {
+							temp.add(counter);
+							temp.add(curNum);
+						}
+						curNum = number;
+						counter = 1;
+					}
+				}
+				else {
+					if (counter > 0) {
+						temp.add(counter);
+						temp.add(curNum);
+					}
+					counter = 0;
+				}
+			}
+			if (counter > 0) {
+				temp.add(counter);
+				temp.add(curNum);
+			}
+			col.add(temp);
+			temp = new ArrayList<Integer>();
+			counter = 0;
+			curNum = 0;
+		}
+		
+		
+		
+		/*
 		// Iterates through the rows 
 		for( int i = 0; i < puzzle.size(); i++ ) {
 			for( int j = 0; j < puzzle.get(i).size(); j++ ) {
@@ -70,6 +139,7 @@ public class puzzleParser {
 							if( counter != 0 ) { // If the tile is not filled and there has been a filled tile previously
 								temp.add(counter);
 								temp.add(curNum);
+								System.out.println(counter + ", " + curNum);
 								curNum = puzzle.get(i).get(j);
 								if (curNum > 0)
 									counter = 1;
@@ -82,13 +152,13 @@ public class puzzleParser {
 						temp.add(counter);
 						temp.add(curNum);
 					}
-					row.add(temp);
+					col.add(temp);
 					temp = new ArrayList<>();
 					counter = 0; // Resets the counter to be used again
 					curNum = 0;
 				}
 				
-		/*// Iterates through the columns
+		// Iterates through the columns
 		int j = 0;
 		while( j < puzzle.get(0).size() ) {
 			for( int i = 0; i < puzzle.size(); i++ ) {

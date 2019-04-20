@@ -50,8 +50,8 @@ public class PuzzleCreator extends Application{
     private int masterRow = 5;
     private int masterCol = 5;
     
-    //Create array to hold colors   white    black    x-ed     blue     green    red      yellow   brown    aqua     purple
-    private String[] colorIndex = {"FEFEFE","010101","000000","0000FF","008000","FF0000","FFFF00","A52A2A","00FFFF","800080"};
+    //Create array to hold colors   white    black    x-ed     blue     green    red      lime     brown    aqua     purple
+    private String[] colorIndex = {"FEFEFE","010101","000000","0000FF","008000","FF0000","00FF00","A52A2A","00FFFF","800080"};
     
     //create variable to track current color
     private int curColor = 1;
@@ -417,9 +417,5 @@ public class PuzzleCreator extends Application{
 		popupwindow.setScene(scene1);   
 		popupwindow.showAndWait();
 	}
-	
-	public static void main(String[] args) {
-        launch(args);
-    }
 
 }
