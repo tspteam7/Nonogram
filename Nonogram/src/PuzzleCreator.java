@@ -50,8 +50,8 @@ public class PuzzleCreator extends Application{
     private int masterRow = 5;
     private int masterCol = 5;
     
-    //Create array to hold colors   white    black    blue     green    red      yellow   brown    orange   aqua     purple
-    private String[] colorIndex = {"FEFEFE","010101","0000FF","008000","FF0000","FFFF00","A52A2A","FFA500","00FFFF","800080"};
+    //Create array to hold colors   white    black    x-ed     blue     green    red      yellow   brown    aqua     purple
+    private String[] colorIndex = {"FEFEFE","010101","000000","0000FF","008000","FF0000","FFFF00","A52A2A","00FFFF","800080"};
     
     //create variable to track current color
     private int curColor = 1;
@@ -141,6 +141,8 @@ public class PuzzleCreator extends Application{
         VBox colorPicker = new VBox();
         colorPicker.setMaxSize(50, 500);
         for (int butCol = 1; butCol < 10; butCol++) {
+        	if(butCol == 2)
+        		continue;
         	final int buttonColor = butCol;
         	Button pickBut = new Button();
         	pickBut.setMinWidth(Math.min(50, 50));
@@ -341,7 +343,8 @@ public class PuzzleCreator extends Application{
 				b.setOnAction(new EventHandler<ActionEvent>() {
 				    @Override public void handle(ActionEvent e) {
 				    	//If current button is white
-				    	if(boardList.get(row).get(col) == 0 || boardList.get(row).get(col) != curColor) {
+				    	int curSquare = boardList.get(row).get(col);
+				    	if(curSquare == 0 || curSquare == 1 || curSquare != curColor) {
 				    		//Change the button to black and remove labels
 				    		String color2 = colorIndex[curColor];
 				    		b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#" + color2 + ";");

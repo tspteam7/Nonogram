@@ -12,6 +12,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,6 +22,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -55,6 +57,9 @@ public class NonogramGUI extends Application {
     //Arrays to store the data about how pixels lay out on the grid
     private ArrayList<ArrayList<Integer>> rowInfoList = new ArrayList<ArrayList<Integer>>();
     private ArrayList<ArrayList<Integer>> colInfoList = new ArrayList<ArrayList<Integer>>();
+    
+    //Create array to hold colors   white    black    x-ed     blue     green    red      yellow   brown    aqua     purple
+    private String[] colorIndex = {"FEFEFE","010101","000000","0000FF","008000","FF0000","FFFF00","A52A2A","00FFFF","800080"};
     
     //The master check array
     private ArrayList<ArrayList<Integer>> masterList = new ArrayList<ArrayList<Integer>>();
@@ -254,33 +259,38 @@ public class NonogramGUI extends Application {
 		//Create the hint boxes for each Column at the top
 		for (int c = 1 ; c < i+1; c++) {
 			String t = "";
-			for(int p = 0; p < colInfoList.get(c-1).size(); p++) {
-				t = t + colInfoList.get(c-1).get(p) + "\n";
+			VBox vbox = new VBox();
+			for(int p = 0; p < colInfoList.get(c-1).size(); p+=2) {
+				t = "" + colInfoList.get(c-1).get(p);
+				Label label = new Label(t);
+				String labelColor = "#" + colorIndex[colInfoList.get(c-1).get(p+1)];
+				label.setTextFill(hexToRGB(labelColor));
+				vbox.getChildren().add(label);
+				vbox.setAlignment(Pos.CENTER);
+				//label.setMinHeight(500/j + t.length()*4);
 			}
-			Label label = new Label(t);
-			label.setTextFill(Color.BLACK);
-			label.setStyle("-fx-border-color:black; -fx-background-color: white;");
-			label.setMinHeight(500/j + j*4);
-			label.setMinWidth(Math.min(500/i, 500/j));
-			label.setAlignment(Pos.CENTER);
-			grid.add(label, c, 0);
-			GridPane.setHalignment(label, HPos.CENTER);
+			grid.add(vbox, c, 0);
+			GridPane.setHalignment(vbox, HPos.CENTER);
 		}
 		
 		//Write info for each row
 		for(int r = 1 ; r < j+1; r++) {
 			//Create the hint boxes for each row on the left side of the puzzle
 			String t = "";
-			for(int p = 0; p < rowInfoList.get(r-1).size(); p++) {
-				t = t + rowInfoList.get(r-1).get(p) + " ";
+			HBox hbox = new HBox();
+			for(int p = 0; p < rowInfoList.get(r-1).size(); p+=2) {
+				t = "" + rowInfoList.get(r-1).get(p);
+				Label label = new Label(t);
+				String labelColor = "#" + colorIndex[rowInfoList.get(r-1).get(p+1)];
+				label.setTextFill(hexToRGB(labelColor));
+				hbox.getChildren().add(label);
+				hbox.setAlignment(Pos.CENTER);
+				//label.setMinWidth(500/i + t.length()*2);
+				
 			}
-			Label label = new Label(t);
-			label.setTextFill(Color.BLACK);
-			label.setStyle("-fx-border-color:black; -fx-background-color: white;");
-			label.setMinWidth(500/i + i*3);
-			label.setMinHeight(Math.min(500/i, 500/j));
-			grid.add(label, 0, r);
-			GridPane.setHalignment(label, HPos.CENTER);
+			
+			grid.add(hbox, 0, r);
+			GridPane.setHalignment(hbox, HPos.RIGHT);
 			
 			//For each grid square
 			for(int c = 1; c < i+1; c++) {
@@ -424,5 +434,11 @@ public class NonogramGUI extends Application {
 		
 	}	
 	
+	public static Color hexToRGB(String colorStr) {
+	    return Color.rgb(
+	            Integer.valueOf( colorStr.substring( 1, 3 ), 16 ),
+	            Integer.valueOf( colorStr.substring( 3, 5 ), 16 ),
+	            Integer.valueOf( colorStr.substring( 5, 7 ), 16 ) );
+	}
 	
 }
