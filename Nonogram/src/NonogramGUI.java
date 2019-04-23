@@ -223,7 +223,7 @@ public class NonogramGUI extends Application {
         VBox curColorBox = new VBox();
         curColorBox.setMaxSize(100, 110);
         Label curColorLab = new Label("Current Color");
-        curColorLab.setTextFill(Color.rgb(28, 191, 107));
+        curColorLab.setTextFill(Color.rgb(0, 0, 0));
         curColorBut = new Button();
         curColorBut.setMinSize(100,100);
         curColorBut.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#" + colorIndex[curColor] + ";");
