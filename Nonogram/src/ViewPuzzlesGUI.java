@@ -3,6 +3,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
@@ -13,9 +14,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.control.ScrollBar;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import java.awt.image.BufferedImage;
 import java.sql.*;
@@ -44,6 +47,8 @@ public class ViewPuzzlesGUI extends Application {
 		GridPane top = new GridPane();
 		BorderPane overall = new BorderPane();
 		Pane barPane = new Pane();
+		Screen screen = Screen.getPrimary();
+		Rectangle2D bounds = screen.getVisualBounds();
 
 		//Sets the spacing between elements
 		root.setAlignment(Pos.CENTER);
@@ -114,8 +119,11 @@ public class ViewPuzzlesGUI extends Application {
 		//Setting the scene and stage
 		Scene scene = new Scene(overall);
 		scene.getStylesheets().add("LoginCSS.css");
-
-		primaryStage.setFullScreen(true);
+		
+		primaryStage.setX(bounds.getMinX());
+		primaryStage.setY(bounds.getMinY());
+		primaryStage.setWidth(bounds.getWidth());
+		primaryStage.setHeight(bounds.getHeight());
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Nonogram");
 		primaryStage.show();
