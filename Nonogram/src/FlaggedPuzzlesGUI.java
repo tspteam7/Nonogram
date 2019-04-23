@@ -90,7 +90,8 @@ public class FlaggedPuzzlesGUI extends Application {
 					parseInfo.getClues(rowInfo, colInfo, puzzle.getMaster());
 					FlaggedPuzzlesViewer openGUI = new FlaggedPuzzlesViewer(username, tempInt[0]);
 					openGUI.setInfo(puzzle.getMaster(), rowInfo, colInfo, puzzle.getMaster(), 1);
-					openGUI.start(primaryStage);
+					openGUI.start(new Stage());
+					primaryStage.close();
 				});
 
 				if (i % 4 != 0 || i == 0) {

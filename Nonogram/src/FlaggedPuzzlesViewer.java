@@ -172,7 +172,8 @@ public class FlaggedPuzzlesViewer extends Application {
         
         close.setOnAction(e -> {
         	FlaggedPuzzlesGUI gui = new FlaggedPuzzlesGUI(username);
-        	gui.start(primaryStage);
+        	gui.start(new Stage());
+        	primaryStage.close();
         });
         
         disable();
