@@ -80,7 +80,6 @@ public class FlaggedPuzzlesViewer extends Application {
      */
     public void start(Stage primaryStage) {
         //Make the root to hold everything
-    	primaryStage = new Stage();
         StackPane root = new StackPane();
 
         //Title
@@ -100,12 +99,6 @@ public class FlaggedPuzzlesViewer extends Application {
         Button close = new Button("Close");
         close.setMinHeight(50);
         close.setMinWidth(70);
-        Stage temp [] = {primaryStage};
-        close.setOnAction(e -> {
-        	FlaggedPuzzlesGUI gui = new FlaggedPuzzlesGUI(username);
-        	gui.start(new Stage());
-        	temp[0].close();
-        });
 
         //Create a delete button
         Button delete = new Button("Delete");
@@ -176,7 +169,14 @@ public class FlaggedPuzzlesViewer extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
+        
+        close.setOnAction(e -> {
+        	FlaggedPuzzlesGUI gui = new FlaggedPuzzlesGUI(username);
+        	gui.start(primaryStage);
+        });
+        
         disable();
+       
 	}
 
 
