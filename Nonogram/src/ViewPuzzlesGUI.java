@@ -82,7 +82,8 @@ public class ViewPuzzlesGUI extends Application {
 				ArrayList<ArrayList<Integer>> colInfo = new ArrayList<>();
 				parse.getClues(rowInfo, colInfo, master);
 				game.setInfo(master, rowInfo, colInfo, null, 2);
-				game.start(primaryStage);
+				game.start(new Stage());
+				primaryStage.close();
 			});
 			root.add(temp, i % 4, rowIndex);
 		}
@@ -110,7 +111,8 @@ public class ViewPuzzlesGUI extends Application {
 					parseInfo.getClues(rowInfo, colInfo, puzzle.getMaster());
 					NonogramGUI openGUI = new NonogramGUI(username, tempInt[0]);
 					openGUI.setInfo(puzzle.getMaster(), rowInfo, colInfo, puzzle.getWorking(), 1);
-					openGUI.start(primaryStage);
+					openGUI.start(new Stage());
+					primaryStage.close();
 				});
 
 				if (i % 4 != 0 || i == 0) {

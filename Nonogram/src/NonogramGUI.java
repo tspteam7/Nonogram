@@ -90,7 +90,6 @@ public class NonogramGUI extends Application {
      */
     public void start(Stage stage) {
         //Make the root to hold everything
-    	stage = new Stage();
         StackPane root = new StackPane();
         
         //Title
@@ -112,7 +111,7 @@ public class NonogramGUI extends Application {
         close.setMinWidth(70);
         close.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
-		    	Stage stage = (Stage) close.getScene().getWindow();
+		    	Stage stage = (new Stage());
 		    	stage.close();
 		    	switch(whereTo) {
 		    	case 0:
