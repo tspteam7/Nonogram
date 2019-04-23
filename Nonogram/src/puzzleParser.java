@@ -67,8 +67,8 @@ public class puzzleParser {
 			curNum = 0;
 		}
 		
-		for (int i = 0; i < puzzle.size(); i++) {
-			for (int j = 0; j < puzzle.get(i).size(); j++) {
+		for (int i = 0; i < puzzle.get(0).size(); i++) {
+			for (int j = 0; j < puzzle.size(); j++) {
 				int number = puzzle.get(j).get(i);
 				if (number > 0) {
 					if (number == curNum)
