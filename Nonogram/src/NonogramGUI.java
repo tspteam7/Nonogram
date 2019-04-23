@@ -445,7 +445,6 @@ public class NonogramGUI extends Application {
 			for(int c = 0 ; c < masterCol ; c++) {
 				if(masterList.get(r).get(c) != boardList.get(r).get(c) && !(masterList.get(r).get(c) == 0 && boardList.get(r).get(c) == 2) && !(masterList.get(r).get(c) == 2 && boardList.get(r).get(c) == 0)) {
 					equals = false;
-					System.out.println(r + ", " + c + ": Should be:" + masterList.get(r).get(c) + " , was: " + boardList.get(r).get(c));
 					break out;
 				}
 			}
