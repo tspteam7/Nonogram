@@ -172,7 +172,7 @@ public class Menu extends Application {
         //Button that shows the Flagged GUI for admins
         flaggedBtn.setOnAction(e->{
         	FlaggedPuzzlesGUI flagged = new FlaggedPuzzlesGUI();
-        	flagged.start(new Stage());
+        	flagged.start(primaryStage);
         });
         
     }

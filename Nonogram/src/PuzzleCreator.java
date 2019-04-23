@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -27,9 +26,6 @@ public class PuzzleCreator extends Application{
 
 	//Create string to store username
 	String username;
-	
-	//Create the global stage variables
-    private Stage stage = null;
     
     //Create the GridPane (must be global for use in listeners)
     private GridPane gridPane = null;
@@ -57,9 +53,8 @@ public class PuzzleCreator extends Application{
     }
     
 	@Override
-	public void start(Stage arg0) throws Exception {
+	public void start(Stage stage) throws Exception {
 		//Make the root to hold everything
-    	stage = new Stage();
         StackPane root = new StackPane();
         
         //Title

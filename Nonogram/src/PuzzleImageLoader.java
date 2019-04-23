@@ -1,10 +1,7 @@
 import java.util.*;
-import java.util.List;
 import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
-import java.net.*;
-
 import javax.imageio.*;
 public class PuzzleImageLoader {
 	public BufferedImage img = null;
