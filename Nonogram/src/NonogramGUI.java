@@ -12,6 +12,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,6 +22,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -55,6 +57,13 @@ public class NonogramGUI extends Application {
     //Arrays to store the data about how pixels lay out on the grid
     private ArrayList<ArrayList<Integer>> rowInfoList = new ArrayList<ArrayList<Integer>>();
     private ArrayList<ArrayList<Integer>> colInfoList = new ArrayList<ArrayList<Integer>>();
+    
+    //Create array to hold colors   white    black    x-ed     blue     green    red      lime     brown    aqua     purple
+    private String[] colorIndex = {"FEFEFE","010101","000000","0000FF","008000","FF0000","00FF00","A52A2A","00FFFF","800080"};
+    
+    //create variable to track current color
+    private int curColor = 1;
+    private Button curColorBut = null;
     
     //The master check array
     private ArrayList<ArrayList<Integer>> masterList = new ArrayList<ArrayList<Integer>>();
@@ -190,14 +199,46 @@ public class NonogramGUI extends Application {
     		} 
 		});
         
+        //Create the color picker
+        VBox colorPicker = new VBox();
+        colorPicker.setMaxSize(50, 500);
+        for (int butCol = 1; butCol < 10; butCol++) {
+        	if(butCol == 2)
+        		continue;
+        	final int buttonColor = butCol;
+        	Button pickBut = new Button();
+        	pickBut.setMinWidth(Math.min(50, 50));
+			pickBut.setMinHeight(Math.min(50, 50));
+			pickBut.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#" + colorIndex[butCol] + ";");
+			pickBut.setOnAction(new EventHandler<ActionEvent>() {
+			    @Override public void handle(ActionEvent e) {
+			    	curColor = buttonColor;
+			    	curColorBut.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#" + colorIndex[curColor] + ";");
+			    }
+			});
+        	colorPicker.getChildren().add(pickBut);
+        }
+
+        //create current color indicator
+        VBox curColorBox = new VBox();
+        curColorBox.setMaxSize(100, 110);
+        Label curColorLab = new Label("Current Color");
+        curColorLab.setTextFill(Color.rgb(28, 191, 107));
+        curColorBut = new Button();
+        curColorBut.setMinSize(100,100);
+        curColorBut.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#" + colorIndex[curColor] + ";");
+        curColorBox.getChildren().addAll(curColorLab,curColorBut);
+        
         //Set the alignment of title and grid
         StackPane.setAlignment(title, Pos.TOP_CENTER);
         StackPane.setAlignment(gridPane, Pos.CENTER);
         StackPane.setAlignment(close, Pos.BOTTOM_LEFT);
         StackPane.setAlignment(flag, Pos.BOTTOM_RIGHT);
+        StackPane.setAlignment(colorPicker, Pos.CENTER_RIGHT);
+        StackPane.setAlignment(curColorBox, Pos.TOP_RIGHT);
         
         //Add the title and grid to the root, then change the color of root
-        root.getChildren().addAll(title,gridPane,close,flag);
+        root.getChildren().addAll(title,gridPane,close,flag,colorPicker,curColorBox);
         root.setBackground(new Background(new BackgroundFill(Color.ORANGE, CornerRadii.EMPTY, Insets.EMPTY)));
         
         //Create a new scene with the root and show it
@@ -250,67 +291,105 @@ public class NonogramGUI extends Application {
      */
     private GridPane buildPuzzle(int i, int j) {
 		GridPane grid = new GridPane();
+		int squareSize = Math.min(500/i, 500/j);
 		
 		//Create the hint boxes for each Column at the top
 		for (int c = 1 ; c < i+1; c++) {
 			String t = "";
-			for(int p = 0; p < colInfoList.get(c-1).size(); p++) {
-				t = t + colInfoList.get(c-1).get(p) + "\n";
+			VBox vbox = new VBox();
+			for(int p = 0; p < colInfoList.get(c-1).size(); p+=2) {
+				t = "" + colInfoList.get(c-1).get(p);
+				Label label = new Label(t);
+				String labelColor = "#" + colorIndex[colInfoList.get(c-1).get(p+1)];
+				label.setTextFill(hexToRGB(labelColor));
+				label.setFont(Font.font ("Verdana", Math.min(squareSize*.9, 20)));
+				vbox.getChildren().add(label);
 			}
-			Label label = new Label(t);
-			label.setTextFill(Color.BLACK);
-			label.setStyle("-fx-border-color:black; -fx-background-color: white;");
-			label.setMinHeight(500/j + j*4);
-			label.setMinWidth(Math.min(500/i, 500/j));
-			label.setAlignment(Pos.CENTER);
-			grid.add(label, c, 0);
-			GridPane.setHalignment(label, HPos.CENTER);
+			
+			vbox.setAlignment(Pos.BOTTOM_CENTER);
+			vbox.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#FEFEFE;");
+			grid.add(vbox, c, 0);
+			GridPane.setHalignment(vbox, HPos.CENTER);
+			GridPane.setValignment(vbox, VPos.BOTTOM);
 		}
 		
 		//Write info for each row
 		for(int r = 1 ; r < j+1; r++) {
 			//Create the hint boxes for each row on the left side of the puzzle
 			String t = "";
-			for(int p = 0; p < rowInfoList.get(r-1).size(); p++) {
-				t = t + rowInfoList.get(r-1).get(p) + " ";
+			HBox hbox = new HBox();
+			for(int p = 0; p < rowInfoList.get(r-1).size(); p+=2) {
+				t = "" + rowInfoList.get(r-1).get(p);
+				Label label = new Label(t);
+				String labelColor = "#" + colorIndex[rowInfoList.get(r-1).get(p+1)];
+				label.setTextFill(hexToRGB(labelColor));
+				label.setFont(Font.font ("Verdana", Math.min(squareSize*.9, 20)));
+				hbox.getChildren().add(label);
+				
 			}
-			Label label = new Label(t);
-			label.setTextFill(Color.BLACK);
-			label.setStyle("-fx-border-color:black; -fx-background-color: white;");
-			label.setMinWidth(500/i + i*3);
-			label.setMinHeight(Math.min(500/i, 500/j));
-			grid.add(label, 0, r);
-			GridPane.setHalignment(label, HPos.CENTER);
+			
+			hbox.setAlignment(Pos.CENTER_RIGHT);
+			hbox.setSpacing(5);
+			hbox.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#FEFEFE;");
+			grid.add(hbox, 0, r);
+			GridPane.setHalignment(hbox, HPos.RIGHT);
+			
 			
 			//For each grid square
 			for(int c = 1; c < i+1; c++) {
 				//Create the button,format size,and set default to be white
 				Button b = new Button();
-				b.setMinWidth(Math.min(500/i, 500/j));
-				b.setMinHeight(Math.min(500/i, 500/j));
-	    		b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#FEFEFE;");
+				b.setMinWidth(squareSize);
+				b.setMinHeight(squareSize);
+				b.setFont(Font.font ("Verdana", squareSize*0.8));
+				b.setPadding(Insets.EMPTY);
 	    		
 	    		switch(boardList.get(r-1).get(c-1)) {
 	    		case 0:
 	    			b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#FEFEFE;");
 	    			b.setText("");
 	    			break;
-	    		case 1:
-	    			b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#010101;");
-			    	b.setText("");
-			    	break;
 	    		case 2:
 	    			b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#FEFEFE;");
 	    			b.setText("X");
 	    			break;
+	    		default:
+	    			String color2 = colorIndex[boardList.get(r-1).get(c-1)];
+		    		b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#" + color2 + ";");
+		    		b.setText("");
+			    	break;
 	    		}
 	    		
 	    		//get current coordinates
 				int row = r -1;
-				int column = c - 1;
+				int col = c - 1;
 				
 				//When button is pressed
 				b.setOnAction(new EventHandler<ActionEvent>() {
+				    @Override public void handle(ActionEvent e) {
+				    	//If current button is white
+				    	int curSquare = boardList.get(row).get(col);
+				    	if (curSquare == 2){
+				    		b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#FEFEFE;");
+				    		boardList.get(row).set(col, 0);
+				    		b.setText("");
+				    	} else if(curSquare == 0 || curSquare != curColor) {
+				    		//Change the button to current color and remove labels
+				    		String color2 = colorIndex[curColor];
+				    		b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#" + color2 + ";");
+				    		b.setText("");
+				    		boardList.get(row).set(col, curColor);
+				    	} else if (curSquare == curColor){
+				    		b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#FEFEFE;");
+				    		boardList.get(row).set(col, 2);
+				    		b.setText("X");
+				    	} 
+				    	
+				    	//Update the board and compare to master
+				    	compare();
+				    }
+				});
+				/*b.setOnAction(new EventHandler<ActionEvent>() {
 				    @Override public void handle(ActionEvent e) {
 				    	//If current button is white
 				    	if(boardList.get(row).get(column) == 0) {
@@ -342,7 +421,7 @@ public class NonogramGUI extends Application {
 				    		}
 				    	}
 				    }
-				});
+				});*/
 				
 				//Add the button to the grid
 				grid.add(b, c, r);
@@ -424,5 +503,11 @@ public class NonogramGUI extends Application {
 		
 	}	
 	
+	public static Color hexToRGB(String colorStr) {
+	    return Color.rgb(
+	            Integer.valueOf( colorStr.substring( 1, 3 ), 16 ),
+	            Integer.valueOf( colorStr.substring( 3, 5 ), 16 ),
+	            Integer.valueOf( colorStr.substring( 5, 7 ), 16 ) );
+	}
 	
 }
