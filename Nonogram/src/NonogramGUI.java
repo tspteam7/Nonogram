@@ -147,6 +147,23 @@ public class NonogramGUI extends Application {
 		    
 		});
         
+        Button reset = new Button("Reset");
+        reset.setMinHeight(50);
+        reset.setMinWidth(70);
+        reset.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		    	for (int i = 0; i < boardList.size(); i++) 
+		    		for (int j = 0; j < boardList.get(i).size(); j++) 
+		    			boardList.get(i).set(j, 0);
+    			root.getChildren().remove(gridPane);
+		    	gridPane = buildPuzzle(masterCol, masterRow);
+    			root.getChildren().add(gridPane);
+    			gridPane.setMaxHeight(500);
+            	gridPane.setMaxWidth(500);
+		    }
+		    
+		});
+        
         //Create a flag button
         Button flag = new Button("Flag");
         flag.setMinHeight(50);
@@ -232,12 +249,13 @@ public class NonogramGUI extends Application {
         StackPane.setAlignment(title, Pos.TOP_CENTER);
         StackPane.setAlignment(gridPane, Pos.CENTER);
         StackPane.setAlignment(close, Pos.BOTTOM_LEFT);
+        StackPane.setAlignment(reset, Pos.CENTER_LEFT);
         StackPane.setAlignment(flag, Pos.BOTTOM_RIGHT);
         StackPane.setAlignment(colorPicker, Pos.CENTER_RIGHT);
         StackPane.setAlignment(curColorBox, Pos.TOP_RIGHT);
         
         //Add the title and grid to the root, then change the color of root
-        root.getChildren().addAll(title,gridPane,close,flag,colorPicker,curColorBox);
+        root.getChildren().addAll(title,gridPane,close,reset,flag,colorPicker,curColorBox);
         root.setBackground(new Background(new BackgroundFill(Color.ORANGE, CornerRadii.EMPTY, Insets.EMPTY)));
         
         //Create a new scene with the root and show it
