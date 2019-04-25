@@ -89,8 +89,8 @@ public class NonogramGUI extends Application {
         //Title
         Text title = new Text();
         title.setText("Nonogram");
-        title.setFill(Color.rgb(0, 0, 0));
-        title.setFont(Font.font ("Verdana", 100));
+        title.setStyle("-fx-fill: #1c1207");
+        title.setFont(Font.font ("System", 100));
         title.setTextAlignment(TextAlignment.CENTER);
         
         //Create the grid the game is played on
@@ -105,13 +105,11 @@ public class NonogramGUI extends Application {
         close.setMinWidth(70);
         close.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
-		    	Stage stage = (new Stage());
-		    	stage.close();
 		    	switch(whereTo) {
 		    	case 0:
 		        	TuturiolGUI tutgui = new TuturiolGUI(username);
 		        	try {
-						tutgui.start(new Stage());
+						tutgui.start(stage);
 					} catch (Exception a) {
 						a.printStackTrace();
 					}
@@ -120,17 +118,10 @@ public class NonogramGUI extends Application {
 		    	case 1:
 		    		Puzzle p = new Puzzle(id,username);
 		    		p.update(boardList, id, username);
-		    		
-		    		/*ViewPuzzlesGUI viewGUI = new ViewPuzzlesGUI(username);
-		        	try {
-						viewGUI.start(new Stage());
-					} catch (Exception a) {
-						a.printStackTrace();
-					}*/
 		    	case 2:
 		    		ViewPuzzlesGUI viewGUI = new ViewPuzzlesGUI(username);
 		        	try {
-						viewGUI.start(new Stage());
+						viewGUI.start(stage);
 					} catch (Exception a) {
 						a.printStackTrace();
 					}
@@ -198,6 +189,7 @@ public class NonogramGUI extends Application {
     			      
     			//Create a scene with the layout
     			Scene scene1= new Scene(layout, 300, 250);
+    			scene1.getStylesheets().add("LoginCSS.css");
     			      
     			//Show the popup
     			popupwindow.setScene(scene1);   
@@ -254,6 +246,7 @@ public class NonogramGUI extends Application {
         
         //Create a new scene with the root and show it
         Scene scene = new Scene(root, 1000, 1000);
+        scene.getStylesheets().add("LoginCSS.css");
         stage.setScene(scene);
         stage.show();
         
@@ -490,6 +483,7 @@ public class NonogramGUI extends Application {
 			      
 			//Create a scene with the layout
 			Scene scene1= new Scene(layout, 300, 250);
+			scene1.getStylesheets().add("LoginCSS.css");
 			      
 			//Show the popup
 			popupwindow.setScene(scene1);   

@@ -90,7 +90,6 @@ public class Login extends Application {
 		
 		primaryStage.setScene(scene);				//stage is set to scene
 		primaryStage.setTitle("Login");				//title of the stage is set to "Login"
-		primaryStage.setResizable(false);			//the stage is not resizable
 		primaryStage.show();						//the stage is displayed
 		
 		//button event to log in
