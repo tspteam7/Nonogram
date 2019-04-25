@@ -152,27 +152,27 @@ public class ViewPuzzlesGUI extends Application {
 			return;
 		}
 
-		// put a box in the gridpane for each one
-		int rowIndex = 0;
-		for (int i = 0; i < 4; i++) {
-			final int i_ = i;
-			Button temp = new Button();
-			temp.setText("Random " + 5 * (i + 1) + "x" + 5 * (i + 1));
-			temp.setOnAction(e -> {
-				NonogramGUI game = new NonogramGUI(username, 0);
-				Randomizer rand = new Randomizer();
-				puzzleParser parse = new puzzleParser();
-				ArrayList<ArrayList<Integer>> master = rand.randomizer(5 * (i_ + 1), 5 * (i_ + 1));
-				ArrayList<ArrayList<Integer>> rowInfo = new ArrayList<>();
-				ArrayList<ArrayList<Integer>> colInfo = new ArrayList<>();
-				parse.getClues(rowInfo, colInfo, master);
-				game.setInfo(master, rowInfo, colInfo, null, 2);
-				game.start(new Stage());
-				primaryStage.close();
-			});
-			root.add(temp, i % 4, rowIndex);
-		}
-		rowIndex++;
+//		// put a box in the gridpane for each one
+//		int rowIndex = 0;
+//		for (int i = 0; i < 4; i++) {
+//			final int i_ = i;
+//			Button temp = new Button();
+//			temp.setText("Random " + 5 * (i + 1) + "x" + 5 * (i + 1));
+//			temp.setOnAction(e -> {
+//				NonogramGUI game = new NonogramGUI(username, 0);
+//				Randomizer rand = new Randomizer();
+//				puzzleParser parse = new puzzleParser();
+//				ArrayList<ArrayList<Integer>> master = rand.randomizer(5 * (i_ + 1), 5 * (i_ + 1));
+//				ArrayList<ArrayList<Integer>> rowInfo = new ArrayList<>();
+//				ArrayList<ArrayList<Integer>> colInfo = new ArrayList<>();
+//				parse.getClues(rowInfo, colInfo, master);
+//				game.setInfo(master, rowInfo, colInfo, null, 2);
+//				game.start(new Stage());
+//				primaryStage.close();
+//			});
+//			root.add(temp, i % 4, rowIndex);
+//		}
+//		rowIndex++;
 
 		try {
 			conn = DriverManager.getConnection("jdbc:mysql://classdb.it.mtu.edu/sjogden", "sjogden", "password");
@@ -181,7 +181,7 @@ public class ViewPuzzlesGUI extends Application {
 			rs.first();
 
 			// put in a button for each puzzle
-			int rowIndex = 1;
+			int rowIndex = 0;
 			for (int i = 4; i < numPuzzles + 4; i++) {
 				int tempInt[] = { rs.getInt("puzzle_id") };
 				rs.next();
@@ -204,11 +204,11 @@ public class ViewPuzzlesGUI extends Application {
 
 				if (i % 4 != 0 || i == 4) {
 //					customBtns.add(tempImage, i % 4, rowIndex);
-					customBtns.add(temp, i % 4, rowIndex + 1);
+					customBtns.add(temp, i % 4, rowIndex);
 				} else {
-					rowIndex += 2;
+					rowIndex++;
 //					customBtns.add(tempImage, 0, rowIndex);
-					customBtns.add(temp, 0, rowIndex + 1);		
+					customBtns.add(temp, 0, rowIndex);		
 				}
 			}
 		} catch (SQLException e) {
