@@ -69,9 +69,9 @@ public class PuzzleCreator extends Application{
         
         //Title
         Text title = new Text();
-        title.setText("Nonogram");
-        title.setFill(Color.rgb(28, 191, 107));
-        title.setFont(Font.font ("Verdana", 100));
+        title.setText("Puzzle Creator");
+        title.setStyle("-fx-fill: #1c1207");
+        title.setFont(Font.font ("System", 100));
         title.setTextAlignment(TextAlignment.CENTER);
     	
         // Create the width and height fields
@@ -281,6 +281,7 @@ public class PuzzleCreator extends Application{
 		    			      
 		    			//Create a scene with the layout
 		    			Scene scene1= new Scene(layout, 300, 250);
+		    			scene1.getStylesheets().add("LoginCSS.css");
 		    			      
 		    			//Show the popup
 		    			popupwindowSize.setScene(scene1);   
@@ -305,6 +306,7 @@ public class PuzzleCreator extends Application{
         
         //Create a new scene with the root and show it
         Scene scene = new Scene(root, 1000, 1000);
+        scene.getStylesheets().add("LoginCSS.css");
         stage.setScene(scene);
         stage.show();
 		

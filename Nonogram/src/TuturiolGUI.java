@@ -36,8 +36,8 @@ public class TuturiolGUI extends Application{
         //Title
         Text title = new Text();
         title.setText("Tutorial");
-        title.setFill(Color.rgb(28, 191, 107));
-        title.setFont(Font.font ("Verdana", 100));
+        title.setStyle("-fx-fill: #1c1207");
+        title.setFont(Font.font ("System", 100));
         title.setTextAlignment(TextAlignment.CENTER);
         
         //Create the grid the game is played on
@@ -45,6 +45,7 @@ public class TuturiolGUI extends Application{
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setMaxHeight(500);
         gridPane.setMaxWidth(500);
+        gridPane.setVgap(20);
     	
     	//Create a close button
         Button close = new Button("Close");
@@ -98,6 +99,7 @@ public class TuturiolGUI extends Application{
 				      
 				//Create a scene with the layout
 				Scene scene1= new Scene(layout, 500, 200);
+				scene1.getStylesheets().add("LoginCSS.css");
 				      
 				//Show the popup
 				popupwindow.setScene(scene1);   
@@ -147,6 +149,7 @@ public class TuturiolGUI extends Application{
         
         //Create a new scene with the root and show it
         Scene scene = new Scene(root, 1000, 1000);
+        scene.getStylesheets().add("LoginCSS.css");
         primaryStage.setScene(scene);
         primaryStage.show();
 	}
