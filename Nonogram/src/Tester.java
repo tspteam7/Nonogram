@@ -86,25 +86,25 @@ public class Tester {
 		
 		puzzleRow2.add(0);
 		puzzleRow2.add(0);
-		puzzleRow2.add(0);
+		puzzleRow2.add(4);
 		puzzleRow2.add(0);
 		puzzleRow2.add(0);
 		
-		puzzleRow3.add(1);
+		puzzleRow3.add(3);
+		puzzleRow3.add(3);
+		puzzleRow3.add(4);
 		puzzleRow3.add(0);
-		puzzleRow3.add(1);
-		puzzleRow3.add(0);
-		puzzleRow3.add(1);
+		puzzleRow3.add(5);
 		
 		puzzleRow4.add(0);
 		puzzleRow4.add(0);
-		puzzleRow4.add(0);
+		puzzleRow4.add(4);
 		puzzleRow4.add(0);
 		puzzleRow4.add(0);
 		
 		puzzleRow5.add(0);
 		puzzleRow5.add(0);
-		puzzleRow5.add(1);
+		puzzleRow5.add(6);
 		puzzleRow5.add(0);
 		puzzleRow5.add(0);
 		
@@ -124,10 +124,19 @@ public class Tester {
 		ArrayList<Integer> row5 = new ArrayList<Integer>();
 		
 		row1.add(1);
+		row1.add(1);
+		row2.add(1);
+		row2.add(4);
+		row3.add(2);
+		row3.add(3);
 		row3.add(1);
+		row3.add(4);
 		row3.add(1);
-		row3.add(1);
+		row3.add(5);
+		row4.add(1);
+		row4.add(4);
 		row5.add(1);
+		row5.add(6);
 		
 		ArrayList<Integer> col1 = new ArrayList<Integer>();
 		ArrayList<Integer> col2 = new ArrayList<Integer>();
@@ -136,10 +145,17 @@ public class Tester {
 		ArrayList<Integer> col5 = new ArrayList<Integer>();
 		
 		col1.add(1);
+		col1.add(3);
+		col2.add(1);
+		col2.add(3);
 		col3.add(1);
 		col3.add(1);
+		col3.add(3);
+		col3.add(4);
 		col3.add(1);
+		col3.add(6);
 		col5.add(1);
+		col5.add(5);
 		
 		testRow.add(row1);
 		testRow.add(row2);
@@ -274,7 +290,7 @@ public class Tester {
 	public void testLoad() {
 		Puzzle obj = new Puzzle(1, "admin");
 		String temp1 = "010101010";
-		String temp2 = "000000000";
+		String temp2 = "010000010";
 		assertTrue(temp1.equals(obj.dataToString(obj.getMaster())));
 		assertTrue(temp2.equals(obj.dataToString(obj.getWorking())));
 	}
