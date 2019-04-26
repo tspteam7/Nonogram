@@ -131,7 +131,8 @@ public class Menu extends Application {
 			@Override
 			public void handle(ActionEvent arg0) {
 	        	ViewPuzzlesGUI open = new ViewPuzzlesGUI(username);
-	        	open.start(primaryStage);
+	        	open.start(new Stage());
+	        	primaryStage.close();
 			}
         });
         
@@ -142,7 +143,8 @@ public class Menu extends Application {
 			public void handle(ActionEvent arg0) {
 	        	TuturiolGUI tutgui = new TuturiolGUI(username);
 	        	try {
-					tutgui.start(primaryStage);
+					tutgui.start(new Stage());
+					primaryStage.close();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -156,7 +158,8 @@ public class Menu extends Application {
 			public void handle(ActionEvent arg0) {
 	        	PuzzleCreator pc = new PuzzleCreator(username);
 	        	try {
-					pc.start(primaryStage);
+					pc.start(new Stage());
+					primaryStage.close();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -166,13 +169,15 @@ public class Menu extends Application {
         //method to go back to menu
         logout.setOnAction(e->{
       		Login login = new Login();
-      		login.start(primaryStage);
+      		login.start(new Stage());
+      		primaryStage.close();
         });
         
         //Button that shows the Flagged GUI for admins
         flaggedBtn.setOnAction(e->{
         	FlaggedPuzzlesGUI flagged = new FlaggedPuzzlesGUI(username);
-        	flagged.start(primaryStage);
+        	flagged.start(new Stage());
+        	primaryStage.close();
         });
         
     }

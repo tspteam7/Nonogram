@@ -47,8 +47,6 @@ public class ViewPuzzlesGUI extends Application {
 		GridPane top = new GridPane();
 		BorderPane overall = new BorderPane();
 		Pane barPane = new Pane();
-		Screen screen = Screen.getPrimary();
-		Rectangle2D bounds = screen.getVisualBounds();
 
 		//Sets the spacing between elements
 		root.setAlignment(Pos.CENTER);
@@ -100,7 +98,8 @@ public class ViewPuzzlesGUI extends Application {
 				ArrayList<ArrayList<Integer>> colInfo = new ArrayList<>();
 				parse.getClues(rowInfo, colInfo, master);
 				game.setInfo(master, rowInfo, colInfo, null, 2);
-				game.start(primaryStage);
+				game.start(new Stage());
+				primaryStage.close();
 			});
 			randomBtns.getChildren().add(temp);
 		}
@@ -117,13 +116,8 @@ public class ViewPuzzlesGUI extends Application {
 		overall.setRight(bar);
 
 		//Setting the scene and stage
-		Scene scene = new Scene(overall);
+		Scene scene = new Scene(overall, 800, 600);
 		scene.getStylesheets().add("LoginCSS.css");
-		
-		primaryStage.setX(bounds.getMinX());
-		primaryStage.setY(bounds.getMinY());
-		primaryStage.setWidth(bounds.getWidth());
-		primaryStage.setHeight(bounds.getHeight());
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Nonogram");
 		primaryStage.show();
@@ -199,7 +193,9 @@ public class ViewPuzzlesGUI extends Application {
 					parseInfo.getClues(rowInfo, colInfo, puzzle.getMaster());
 					NonogramGUI openGUI = new NonogramGUI(username, tempInt[0]);
 					openGUI.setInfo(tempPuzzle.getMaster(), rowInfo, colInfo, tempPuzzle.getWorking(), 1);
-					openGUI.start(primaryStage);
+					primaryStage.close();
+					openGUI.start(new Stage());
+					
 				});
 
 				if (i % 4 != 0 || i == 4) {
@@ -219,7 +215,8 @@ public class ViewPuzzlesGUI extends Application {
 		// method to go back to menu
 		back.setOnAction(e -> {
 			Menu menu = new Menu(username);
-			menu.start(primaryStage);
+			menu.start(new Stage());
+			primaryStage.close();
 		});
 
 	}

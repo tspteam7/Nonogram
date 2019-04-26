@@ -53,11 +53,11 @@ public class TuturiolGUI extends Application{
         close.setMinWidth(70);
         close.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
-		    	primaryStage.close();
 		    	
 		    	Menu menu = new Menu(username);
 	        	try {
 					menu.start(new Stage());
+					primaryStage.close();
 				} catch (Exception a) {
 					a.printStackTrace();
 				}

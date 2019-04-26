@@ -176,10 +176,9 @@ public class PuzzleCreator extends Application{
         close.setMinWidth(70);
         close.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
-		    	Stage stage = (Stage) close.getScene().getWindow();
-		    	stage.close();
 		    	Menu menu = new Menu(username);
 		    	menu.start(new Stage());
+		    	stage.close();
 		    }
 		});
         

@@ -108,7 +108,8 @@ public class FlaggedPuzzlesGUI extends Application {
 		// method to go back to menu
 		back.setOnAction(e -> {
 			Menu menu = new Menu(username);
-			menu.start(primaryStage);
+			menu.start(new Stage());
+			primaryStage.close();
 		});
 
 	}

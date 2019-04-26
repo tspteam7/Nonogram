@@ -118,7 +118,8 @@ public class Login extends Application {
         				if(password.getText().equals(rs.getString("password"))) {
         					//NonogramGUI n = new NonogramGUI();
         					Menu n = new Menu(username.getText()); // Testing opening the menu
-        					n.start(primaryStage);
+        					n.start(new Stage());
+        					primaryStage.close();
         				} else {
         					invalidLogin.setText("Invalid login information");
         					invalidLogin.setVisible(true);
@@ -156,7 +157,8 @@ public class Login extends Application {
         				rs.first();
         				if( password.getText().equals(rs.getString("password"))) {
         				  Menu n = new Menu(username.getText());
-        				  n.start(primaryStage);
+        				  n.start(new Stage());
+        				  primaryStage.close();
         				} else {
         					invalidLogin.setText("Invalid login information");
         					invalidLogin.setVisible(true);

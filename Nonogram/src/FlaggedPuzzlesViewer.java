@@ -233,6 +233,7 @@ public class FlaggedPuzzlesViewer extends Application {
         Scene scene = new Scene(root, 1000, 1000);
         scene.getStylesheets().add("LoginCSS.css");
         stage.setScene(scene);
+        stage.setTitle("Nonogram");
         stage.show();
        
         close.setOnAction(e -> {

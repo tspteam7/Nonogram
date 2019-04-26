@@ -109,7 +109,8 @@ public class NonogramGUI extends Application {
 		    	case 0:
 		        	TuturiolGUI tutgui = new TuturiolGUI(username);
 		        	try {
-						tutgui.start(stage);
+						tutgui.start(new Stage());
+						stage.close();
 					} catch (Exception a) {
 						a.printStackTrace();
 					}
@@ -121,7 +122,8 @@ public class NonogramGUI extends Application {
 		    	case 2:
 		    		ViewPuzzlesGUI viewGUI = new ViewPuzzlesGUI(username);
 		        	try {
-						viewGUI.start(stage);
+						viewGUI.start(new Stage());
+						stage.close();
 					} catch (Exception a) {
 						a.printStackTrace();
 					}
