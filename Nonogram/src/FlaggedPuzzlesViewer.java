@@ -11,6 +11,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -20,6 +21,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -37,33 +39,37 @@ import javafx.stage.Stage;
  */
 public class FlaggedPuzzlesViewer extends Application {
 
-	//Create the global stage variables
-    private Stage stage = null;
-
-    //Create public variable keeping track of number of rows and columns of the puzzle
+	//Create public variable keeping track of number of rows and columns of the puzzle
     private int masterRow = 0;
     private int masterCol = 0;
-
+    
     //If this puzzle is from tutorial
     private int whereTo = 0;
-
+    
     //Username
     private String username = "";
     private int id = 0;
-
+    
     //Arrays to store the data about how pixels lay out on the grid
     private ArrayList<ArrayList<Integer>> rowInfoList = new ArrayList<ArrayList<Integer>>();
     private ArrayList<ArrayList<Integer>> colInfoList = new ArrayList<ArrayList<Integer>>();
-
+    
+    //Create array to hold colors   white    black    x-ed     blue     green    red      lime     brown    aqua     purple
+    private String[] colorIndex = {"FEFEFE","010101","000000","0000FF","008000","FF0000","00FF00","A52A2A","00FFFF","800080"};
+    
+    //create variable to track current color
+    private int curColor = 1;
+    private Button curColorBut = null;
+    
     //The master check array
     private ArrayList<ArrayList<Integer>> masterList = new ArrayList<ArrayList<Integer>>();
-
+    
     //The board being used on the game, default is all 0
     private ArrayList<ArrayList<Integer>> boardList = new ArrayList<ArrayList<Integer>>();
-
+    
     GridPane gridPane; 
-
-
+    
+	
     /**
      * Constructor that passes in a  username, and the username is only used if it is a player 
      * 
@@ -78,29 +84,81 @@ public class FlaggedPuzzlesViewer extends Application {
     /**
      * Create the stage to play the game
      */
-    public void start(Stage primaryStage) {
+    public void start(Stage stage) {
         //Make the root to hold everything
         StackPane root = new StackPane();
-
+        
         //Title
         Text title = new Text();
         title.setText("Nonogram");
-        title.setFill(Color.rgb(0, 0, 0));
-        title.setFont(Font.font ("Verdana", 100));
+        title.setStyle("-fx-fill: #1c1207");
+        title.setFont(Font.font ("System", 100));
         title.setTextAlignment(TextAlignment.CENTER);
-
+        
         //Create the grid the game is played on
         gridPane = buildPuzzle(masterCol,masterRow);
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setMaxHeight(500);
         gridPane.setMaxWidth(500);
-
+        
     	//Create a close button
         Button close = new Button("Close");
         close.setMinHeight(50);
         close.setMinWidth(70);
-
-        //Create a delete button
+       
+        //Create an unflag button
+        Button flag = new Button("Unflag");
+        flag.setMinHeight(50);
+        flag.setMinWidth(70);
+        flag.setOnAction(e-> {
+        	Connection conn = null;
+        	PreparedStatement stmt = null;
+    		try {
+    			conn = DriverManager.getConnection(
+    					"jdbc:mysql://classdb.it.mtu.edu/sjogden",
+    					"sjogden",
+    					"password");
+    			stmt = conn.prepareStatement("UPDATE Puzzles SET flagged = false WHERE puzzle_id = ?");
+    			stmt.setInt(1, id);
+    			stmt.execute();
+    			//disable all buttons
+    			disable();
+    			
+    			//create popup stage
+    			Stage popupwindow=new Stage();
+    		      
+    			//Set style
+    			popupwindow.initModality(Modality.APPLICATION_MODAL);      
+    			      
+    			//Create the title
+    			Label label1= new Label("Puzzle has been unflagged");
+    			      
+    			//Create a close button the close the popup
+    			Button button1= new Button("Close");   
+    			button1.setOnAction(eee -> popupwindow.close());
+    			     
+    			//Create layout format
+    			VBox layout= new VBox(10);    
+    			      
+    			//Add the label and button 
+    			layout.getChildren().addAll(label1, button1);
+    			layout.setAlignment(Pos.CENTER);
+    			      
+    			//Create a scene with the layout
+    			Scene scene1= new Scene(layout, 300, 250);
+    			scene1.getStylesheets().add("LoginCSS.css");
+    			      
+    			//Show the popup
+    			popupwindow.setScene(scene1);   
+    			popupwindow.showAndWait();
+    			
+    		} catch (SQLException ee) {
+    			System.out.println(ee.getMessage());
+    			ee.printStackTrace();
+    		} 
+		});
+        
+        //create a delete button
         Button delete = new Button("Delete");
         delete.setMinHeight(50);
         delete.setMinWidth(70);
@@ -112,74 +170,79 @@ public class FlaggedPuzzlesViewer extends Application {
     					"jdbc:mysql://classdb.it.mtu.edu/sjogden",
     					"sjogden",
     					"password");
-    			stmt = conn.prepareStatement("delete from WorkingPuzzles WHERE puzzle_id = ?");
+    			stmt = conn.prepareStatement("Delete from WorkingPuzzles WHERE puzzle_id = ?");
     			stmt.setInt(1, id);
     			stmt.execute();
-    			stmt = conn.prepareStatement("delete from Puzzles WHERE puzzle_id = ?");
+    			stmt = conn.prepareStatement("Delete from Puzzles WHERE puzzle_id = ?");
     			stmt.setInt(1, id);
     			stmt.execute();
     			//disable all buttons
     			disable();
-
+    			
     			//create popup stage
     			Stage popupwindow=new Stage();
-
+    		      
     			//Set style
     			popupwindow.initModality(Modality.APPLICATION_MODAL);      
-
+    			      
     			//Create the title
     			Label label1= new Label("Puzzle has been deleted");
-
+    			      
     			//Create a close button the close the popup
     			Button button1= new Button("Close");   
     			button1.setOnAction(eee -> popupwindow.close());
-
+    			     
     			//Create layout format
     			VBox layout= new VBox(10);    
-
+    			      
     			//Add the label and button 
     			layout.getChildren().addAll(label1, button1);
     			layout.setAlignment(Pos.CENTER);
-
+    			      
     			//Create a scene with the layout
     			Scene scene1= new Scene(layout, 300, 250);
-
+    			scene1.getStylesheets().add("LoginCSS.css");
+    			      
     			//Show the popup
     			popupwindow.setScene(scene1);   
     			popupwindow.showAndWait();
-
+    			
     		} catch (SQLException ee) {
     			System.out.println(ee.getMessage());
     			ee.printStackTrace();
     		} 
 		});
-
+        
+        
+        
         //Set the alignment of title and grid
         StackPane.setAlignment(title, Pos.TOP_CENTER);
         StackPane.setAlignment(gridPane, Pos.CENTER);
-        StackPane.setAlignment(close, Pos.BOTTOM_LEFT);
-        StackPane.setAlignment(delete, Pos.BOTTOM_RIGHT);
-
+        HBox buttons = new HBox(10);
+        buttons.getChildren().add(flag);
+        buttons.getChildren().add(delete);
+        buttons.getChildren().add(close);
+        StackPane.setAlignment(buttons, Pos.BOTTOM_RIGHT);
+        
+        
         //Add the title and grid to the root, then change the color of root
-        root.getChildren().addAll(title,gridPane,close,delete);
+        root.getChildren().addAll(title,gridPane,buttons);
         root.setBackground(new Background(new BackgroundFill(Color.ORANGE, CornerRadii.EMPTY, Insets.EMPTY)));
-
+        
         //Create a new scene with the root and show it
         Scene scene = new Scene(root, 1000, 1000);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
-        
+        scene.getStylesheets().add("LoginCSS.css");
+        stage.setScene(scene);
+        stage.show();
+       
         close.setOnAction(e -> {
         	FlaggedPuzzlesGUI gui = new FlaggedPuzzlesGUI(username);
         	gui.start(new Stage());
-        	primaryStage.close();
+        	stage.close();
         });
         
         disable();
-       
 	}
-
 
 	/**
 	 * Set the info to be used when making the puzzles
@@ -198,10 +261,21 @@ public class FlaggedPuzzlesViewer extends Application {
     	whereTo = isTutorial;
     	masterRow = m.size();
     	masterCol = m.get(0).size();
-    	boardList = wb;
-
+    	
+    	//If tutorial is not true we want to set the working board
+    	if (whereTo == 1) {
+    		boardList = wb;
+    	}else {
+    		//else initailize the working board
+    		for(int i = 0; i < masterRow ; i++) {
+    			boardList.add(new ArrayList<Integer>());
+    			for(int j = 0; j < masterCol ; j++) {
+    				boardList.get(i).add(0);
+    			}
+    		}
+    	}
     }
-
+	
     /**
      * Creates the grid for the puzzle based on an input of number of rows and columns
      * given in an input
@@ -212,74 +286,146 @@ public class FlaggedPuzzlesViewer extends Application {
      */
     private GridPane buildPuzzle(int i, int j) {
 		GridPane grid = new GridPane();
-
+		int squareSize = Math.min(500/i, 500/j);
+		
 		//Create the hint boxes for each Column at the top
 		for (int c = 1 ; c < i+1; c++) {
 			String t = "";
-			for(int p = 0; p < colInfoList.get(c-1).size(); p++) {
-				t = t + colInfoList.get(c-1).get(p) + "\n";
+			VBox vbox = new VBox();
+			for(int p = 0; p < colInfoList.get(c-1).size(); p+=2) {
+				t = "" + colInfoList.get(c-1).get(p);
+				Label label = new Label(t);
+				String labelColor = "#" + colorIndex[colInfoList.get(c-1).get(p+1)];
+				label.setTextFill(hexToRGB(labelColor));
+				label.setFont(Font.font ("Verdana", Math.min(squareSize*.9, 20)));
+				vbox.getChildren().add(label);
 			}
-			Label label = new Label(t);
-			label.setTextFill(Color.BLACK);
-			label.setStyle("-fx-border-color:black; -fx-background-color: white;");
-			label.setMinHeight(500/j + j*4);
-			label.setMinWidth(Math.min(500/i, 500/j));
-			label.setAlignment(Pos.CENTER);
-			grid.add(label, c, 0);
-			GridPane.setHalignment(label, HPos.CENTER);
+			
+			vbox.setAlignment(Pos.BOTTOM_CENTER);
+			vbox.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#FEFEFE;");
+			grid.add(vbox, c, 0);
+			GridPane.setHalignment(vbox, HPos.CENTER);
+			GridPane.setValignment(vbox, VPos.BOTTOM);
 		}
-
+		
 		//Write info for each row
 		for(int r = 1 ; r < j+1; r++) {
 			//Create the hint boxes for each row on the left side of the puzzle
 			String t = "";
-			for(int p = 0; p < rowInfoList.get(r-1).size(); p++) {
-				t = t + rowInfoList.get(r-1).get(p) + " ";
+			HBox hbox = new HBox();
+			for(int p = 0; p < rowInfoList.get(r-1).size(); p+=2) {
+				t = "" + rowInfoList.get(r-1).get(p);
+				Label label = new Label(t);
+				String labelColor = "#" + colorIndex[rowInfoList.get(r-1).get(p+1)];
+				label.setTextFill(hexToRGB(labelColor));
+				label.setFont(Font.font ("Verdana", Math.min(squareSize*.9, 20)));
+				hbox.getChildren().add(label);
+				
 			}
-			Label label = new Label(t);
-			label.setTextFill(Color.BLACK);
-			label.setStyle("-fx-border-color:black; -fx-background-color: white;");
-			label.setMinWidth(500/i + i*3);
-			label.setMinHeight(Math.min(500/i, 500/j));
-			grid.add(label, 0, r);
-			GridPane.setHalignment(label, HPos.CENTER);
-
+			
+			hbox.setAlignment(Pos.CENTER_RIGHT);
+			hbox.setSpacing(5);
+			hbox.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#FEFEFE;");
+			grid.add(hbox, 0, r);
+			GridPane.setHalignment(hbox, HPos.RIGHT);
+			
+			
 			//For each grid square
 			for(int c = 1; c < i+1; c++) {
 				//Create the button,format size,and set default to be white
 				Button b = new Button();
-				b.setMinWidth(Math.min(500/i, 500/j));
-				b.setMinHeight(Math.min(500/i, 500/j));
-	    		b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#FEFEFE;");
-
+				b.setMinWidth(squareSize);
+				b.setMinHeight(squareSize);
+				b.setFont(Font.font ("Verdana", squareSize*0.8));
+				b.setPadding(Insets.EMPTY);
+	    		
 	    		switch(boardList.get(r-1).get(c-1)) {
 	    		case 0:
 	    			b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#FEFEFE;");
 	    			b.setText("");
 	    			break;
-	    		case 1:
-	    			b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#010101;");
-			    	b.setText("");
-			    	break;
 	    		case 2:
 	    			b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#FEFEFE;");
 	    			b.setText("X");
 	    			break;
+	    		default:
+	    			String color2 = colorIndex[boardList.get(r-1).get(c-1)];
+		    		b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#" + color2 + ";");
+		    		b.setText("");
+			    	break;
 	    		}
-
+	    		
 	    		//get current coordinates
 				int row = r -1;
-				int column = c - 1;
-
+				int col = c - 1;
+				
+				//When button is pressed
+				b.setOnAction(new EventHandler<ActionEvent>() {
+				    @Override public void handle(ActionEvent e) {
+				    	//If current button is white
+				    	int curSquare = boardList.get(row).get(col);
+				    	if (curSquare == 2){
+				    		b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#FEFEFE;");
+				    		boardList.get(row).set(col, 0);
+				    		b.setText("");
+				    	} else if(curSquare == 0 || curSquare != curColor) {
+				    		//Change the button to current color and remove labels
+				    		String color2 = colorIndex[curColor];
+				    		b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#" + color2 + ";");
+				    		b.setText("");
+				    		boardList.get(row).set(col, curColor);
+				    	} else if (curSquare == curColor){
+				    		b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#FEFEFE;");
+				    		boardList.get(row).set(col, 2);
+				    		b.setText("X");
+				    	} 
+				    	
+				    	//Update the board and compare to master
+				    }
+				});
+				/*b.setOnAction(new EventHandler<ActionEvent>() {
+				    @Override public void handle(ActionEvent e) {
+				    	//If current button is white
+				    	if(boardList.get(row).get(column) == 0) {
+				    		//Change the button to black and remove labels
+				    		b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#010101;");
+				    		b.setText("");
+				    		
+				    		//Update the board and compare to master
+				    		boardList.get(row).set(column, 1);
+				    		compare();
+				    	}else {
+				    		if(boardList.get(row).get(column) == 1) {
+					    		//Change the button to white and remove labels
+					    		b.setStyle("-fx-border-color:#D3D3D3;-fx-background-color:#FEFEFE;");
+					    		b.setText("X");
+					    		
+					    		//Update the board and compare to master
+					    		boardList.get(row).set(column, 2);
+					    		compare();
+				    		}else {
+				    			if(boardList.get(row).get(column) == 2) {
+				    				//remove labels
+						    		b.setText("");
+						    		
+						    		//Update the board and compare to master
+						    		boardList.get(row).set(column, 0);
+						    		compare();
+				    			}
+				    		}
+				    	}
+				    }
+				});*/
+				
 				//Add the button to the grid
 				grid.add(b, c, r);
 			}
 		}
-
+		
 		//Return the grid
 		return grid;
 	}
-
+	
 
 	private void disable() {
 		Button b;
@@ -289,13 +435,19 @@ public class FlaggedPuzzlesViewer extends Application {
 				if (b != null)
 					b.setOnAction(e-> {});
 			} catch (ClassCastException ex){
-
+				
 			}
-
+			
 		}
-
-
+		
+		
 	}	
-
-
+	
+	public static Color hexToRGB(String colorStr) {
+	    return Color.rgb(
+	            Integer.valueOf( colorStr.substring( 1, 3 ), 16 ),
+	            Integer.valueOf( colorStr.substring( 3, 5 ), 16 ),
+	            Integer.valueOf( colorStr.substring( 5, 7 ), 16 ) );
+	}
+	
 }
